@@ -51,6 +51,7 @@ const required = [
   'docs/architecture.md',
   'docs/security-model.md',
   'docs/codex-security-case.md',
+  'docs/demo.md',
   'docs/maintainer-workflows.md',
   'docs/adoption.md',
   'docs/public-boundary.md',

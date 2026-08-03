@@ -12,9 +12,13 @@
 
 CodexPro Runtime turns an explicitly allowed source workspace into a bounded tool surface for AI-assisted engineering. It combines workspace isolation, MCP transports, controlled file and command tools, durable execution records, validation primitives, and human review boundaries in one local runtime.
 
-[中文说明](README.zh-CN.md) · [Quickstart](docs/quickstart.md) · [Architecture](docs/architecture.md) · [Security model](docs/security-model.md) · [Codex Security case](docs/codex-security-case.md) · [Governance](GOVERNANCE.md) · [Roadmap](ROADMAP.md) · [Contributing](CONTRIBUTING.md) · [Adoption evidence](docs/adoption.md)
+[中文说明](README.zh-CN.md) · [Quickstart](docs/quickstart.md) · [Evidence demo](docs/demo.md) · [Architecture](docs/architecture.md) · [Security model](docs/security-model.md) · [Codex Security case](docs/codex-security-case.md) · [Governance](GOVERNANCE.md) · [Roadmap](ROADMAP.md) · [Contributing](CONTRIBUTING.md) · [Adoption evidence](docs/adoption.md)
 
 > **Source preview.** The GitHub repository is public. The npm package `@menglook/codexpro` is intentionally not published and `package.json` remains `private: true`. No GitHub Release, Pages deployment, hosted relay, or managed service is provided.
+
+[![30-second evidence demo](.github/assets/quickstart.gif)](docs/demo.md)
+
+The animation is generated from a disposable local Git workflow. Open the [evidence demo](docs/demo.md) for the 90-second storyboard, machine-readable result, refusal cases, and reproduction commands.
 
 ## Why CodexPro exists
 

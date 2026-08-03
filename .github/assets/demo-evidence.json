@@ -1,0 +1,45 @@
+{
+  "schema_version": "codexpro-public-demo-evidence-v1",
+  "generated_at": "2026-08-03T18:12:18.570Z",
+  "generator": "scripts/generate-demo-assets.mjs",
+  "generation_base_revision": "00588ac6d623ae5332497bc9218ac35847cbc56e",
+  "workflow": {
+    "ok": true,
+    "fixture": "public-demo-fixture",
+    "source_mode": "public-source-preview",
+    "npm_package_published": false,
+    "workspace": {
+      "id": "ws_public_demo",
+      "display_root": "<DISPOSABLE_PUBLIC_FIXTURE>",
+      "allowed_file": "README.md"
+    },
+    "read": {
+      "file": "README.md",
+      "matched_public_fixture": true
+    },
+    "change": {
+      "changed_files": [
+        "README.md"
+      ],
+      "diff": "diff --git a/README.md b/README.md\nindex <before>..<after> 100644\n--- a/README.md\n+++ b/README.md\n@@ -1,3 +1,5 @@\n # Public Demo Fixture\n \n This repository is disposable.\n+\n+- Reviewable change generated inside the allowed root."
+    },
+    "refusal": {
+      "blocked_env": true,
+      "parent_escape": true,
+      "symlink_escape": true
+    },
+    "external_effects": {
+      "git_remotes": [],
+      "automatic_push": false,
+      "automatic_deploy": false,
+      "package_publish": false,
+      "github_release": false
+    }
+  },
+  "media": {
+    "quickstart_gif_seconds": 30,
+    "storyboard_seconds": 90,
+    "mp4_generated": false,
+    "mp4_reason": "No trusted ffmpeg-compatible encoder was available in the generation environment."
+  }
+}

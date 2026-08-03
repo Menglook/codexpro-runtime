@@ -56,9 +56,13 @@
     "cli:help": "node scripts/codexpro-cli.mjs --help",
     "docs:check": "node scripts/verify-doc-links.mjs",
     "security:check": "node scripts/security-controls-smoke.mjs",
+    "demo:workflow": "node scripts/demo-workflow-smoke.mjs",
+    "demo:generate": "node scripts/generate-demo-assets.mjs",
+    "demo:check": "node scripts/verify-demo-assets.mjs",
+    "demo:video": "node scripts/render-demo-video.mjs",
     "pack:dry-run": "npm pack --dry-run --json",
     "package:check": "node scripts/verify-package-boundary.mjs",
-    "check": "npm run docs:check && npm run typecheck && npm run build && npm run cli:help && npm run security:check && npm run package:check"
+    "check": "npm run docs:check && npm run typecheck && npm run build && npm run cli:help && npm run security:check && npm run demo:check && npm run package:check"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "1.29.0",

@@ -12,9 +12,13 @@
 
 CodexPro Runtime 把一个明确授权的源码工作区转换为受边界约束的 AI 工程工具面：统一提供工作区隔离、MCP 传输、受控文件与命令工具、Durable 执行记录、验收原语和人类复核边界。
 
-[English](README.md) · [快速开始](docs/quickstart.md) · [架构](docs/architecture.md) · [安全模型](docs/security-model.md) · [Codex Security 案例](docs/codex-security-case.md) · [治理](GOVERNANCE.md) · [路线图](ROADMAP.md) · [贡献指南](CONTRIBUTING.md) · [采用证据](docs/adoption.md)
+[English](README.md) · [快速开始](docs/quickstart.md) · [证据演示](docs/demo.md) · [架构](docs/architecture.md) · [安全模型](docs/security-model.md) · [Codex Security 案例](docs/codex-security-case.md) · [治理](GOVERNANCE.md) · [路线图](ROADMAP.md) · [贡献指南](CONTRIBUTING.md) · [采用证据](docs/adoption.md)
 
 > **源码预览阶段。** GitHub 仓库已经公开，但 npm 包 `@menglook/codexpro` 尚未发布，`package.json` 继续保持 `private: true`。当前没有 GitHub Release、Pages、托管中继或公共 SaaS 服务。
+
+[![30 秒证据演示](.github/assets/quickstart.gif)](docs/demo.md)
+
+该动画由一次性本地 Git 工作流生成。完整 90 秒分镜、机器结果、拒绝案例和复现命令见[证据演示](docs/demo.md)。
 
 ## 为什么需要 CodexPro
 
