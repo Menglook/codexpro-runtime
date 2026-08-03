@@ -5,12 +5,14 @@
 [![Node.js 20+](https://img.shields.io/badge/Node.js-20%2B-339933?logo=nodedotjs&logoColor=white)](package.json)
 [![npm package](https://img.shields.io/badge/npm-%E5%B0%9A%E6%9C%AA%E5%8F%91%E5%B8%83-lightgrey)](https://github.com/Menglook/codexpro-runtime)
 [![GitHub release](https://img.shields.io/badge/release-%E6%9A%82%E6%97%A0-lightgrey)](https://github.com/Menglook/codexpro-runtime/releases)
+[![GitHub stars](https://img.shields.io/github/stars/Menglook/codexpro-runtime?style=flat)](https://github.com/Menglook/codexpro-runtime/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/Menglook/codexpro-runtime?style=flat)](https://github.com/Menglook/codexpro-runtime/forks)
 
 **面向开源维护者的本地、证据驱动 Agent Runtime 与 MCP 控制平面。**
 
 CodexPro Runtime 把一个明确授权的源码工作区转换为受边界约束的 AI 工程工具面：统一提供工作区隔离、MCP 传输、受控文件与命令工具、Durable 执行记录、验收原语和人类复核边界。
 
-[English](README.md) · [快速开始](docs/quickstart.md) · [架构](docs/architecture.md) · [安全模型](docs/security-model.md) · [维护者工作流](docs/maintainer-workflows.md) · [公开边界](docs/public-boundary.md)
+[English](README.md) · [快速开始](docs/quickstart.md) · [架构](docs/architecture.md) · [安全模型](docs/security-model.md) · [维护者工作流](docs/maintainer-workflows.md) · [采用证据](docs/adoption.md) · [公开边界](docs/public-boundary.md)
 
 > **源码预览阶段。** GitHub 仓库已经公开，但 npm 包 `@menglook/codexpro` 尚未发布，`package.json` 继续保持 `private: true`。当前没有 GitHub Release、Pages、托管中继或公共 SaaS 服务。
 
@@ -210,21 +212,11 @@ CI 通过只表示该公开提交通过了仓库级检查，不代表任何部�
 
 ## Adoption Snapshot
 
-截至 **2026 年 8 月 4 日**：
+可归属基线采集于 **2026-08-03 16:46:44 UTC**：Stars 0、Forks 0、Watchers 0、贡献者 1、近 30 天和近 90 天提交均为 3、Issues 0、Pull Requests 0、GitHub Releases 0；GitHub 维护者可见的近 14 天聚合流量为 Views 0、Clones 0。
 
-| 信号 | 当前公开事实 |
-|---|---|
-| 公开仓库 | `Menglook/codexpro-runtime` 已上线 |
-| npm 包 | 尚未发布 |
-| GitHub Release | 暂无 |
-| 公共托管服务 | 暂无 |
-| 默认遥测 | 本次公开版本未新增 |
-| 公共用户数量 | 不作声明 |
-| 公开案例 | 尚未发布 |
+npm 包尚未发布，因此周下载量和月下载量应标记为**不适用**，不能写成 0。当前不声明公共用户数、独立案例或第三方证言。
 
-更大的私有生产实现为本次净化 Runtime 提供了实践基础，但私有使用不能当作公开采用量。上游 `rebel0789/codexpro` 的指标也不属于本仓库。
-
-只有能够归属、带时间戳且可公开验证的采用证据才会进入后续文档。
+详见 [采用证据](docs/adoption.md)：其中记录数据来源、采集方法、动态徽章、维护者真实验证场景、自愿反馈入口，以及本仓库与上游生态指标之间的严格边界。
 
 ## 公开与私有边界
 
@@ -250,6 +242,7 @@ CI 通过只表示该公开提交通过了仓库级检查，不代表任何部�
 | [架构](docs/architecture.md) | Runtime 层次、数据流和组件边界 |
 | [安全模型](docs/security-model.md) | 产品边界、威胁假设和安全默认值 |
 | [维护者工作流](docs/maintainer-workflows.md) | PR、Issue、Release 和安全流程模式 |
+| [采用证据](docs/adoption.md) | 可归属指标、测量方法、用例分类和反馈入口 |
 | [公开边界](docs/public-boundary.md) | 明确公开与排除内容 |
 | [故障排查](docs/troubleshooting.md) | 源码预览常见安装和验收问题 |
 | [安全政策](SECURITY.md) | 漏洞报告与硬性安全规则 |

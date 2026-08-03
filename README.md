@@ -5,12 +5,14 @@
 [![Node.js 20+](https://img.shields.io/badge/Node.js-20%2B-339933?logo=nodedotjs&logoColor=white)](package.json)
 [![npm package](https://img.shields.io/badge/npm-not%20published-lightgrey)](https://github.com/Menglook/codexpro-runtime)
 [![GitHub release](https://img.shields.io/badge/release-none-lightgrey)](https://github.com/Menglook/codexpro-runtime/releases)
+[![GitHub stars](https://img.shields.io/github/stars/Menglook/codexpro-runtime?style=flat)](https://github.com/Menglook/codexpro-runtime/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/Menglook/codexpro-runtime?style=flat)](https://github.com/Menglook/codexpro-runtime/forks)
 
 **A local, evidence-driven agent runtime and MCP control plane for open-source maintainers.**
 
 CodexPro Runtime turns an explicitly allowed source workspace into a bounded tool surface for AI-assisted engineering. It combines workspace isolation, MCP transports, controlled file and command tools, durable execution records, validation primitives, and human review boundaries in one local runtime.
 
-[中文说明](README.zh-CN.md) · [Quickstart](docs/quickstart.md) · [Architecture](docs/architecture.md) · [Security model](docs/security-model.md) · [Maintainer workflows](docs/maintainer-workflows.md) · [Public boundary](docs/public-boundary.md)
+[中文说明](README.zh-CN.md) · [Quickstart](docs/quickstart.md) · [Architecture](docs/architecture.md) · [Security model](docs/security-model.md) · [Maintainer workflows](docs/maintainer-workflows.md) · [Adoption evidence](docs/adoption.md) · [Public boundary](docs/public-boundary.md)
 
 > **Source preview.** The GitHub repository is public. The npm package `@menglook/codexpro` is intentionally not published and `package.json` remains `private: true`. No GitHub Release, Pages deployment, hosted relay, or managed service is provided.
 
@@ -245,21 +247,11 @@ A green CI result means the checked public source revision passed these reposito
 
 ## Adoption snapshot
 
-Status as of **August 4, 2026**:
+The attributable baseline captured at **2026-08-03 16:46:44 UTC** records 0 stars, 0 forks, 0 watchers, 1 contributor, 3 commits in both the preceding 30-day and 90-day windows, 0 issues, 0 pull requests, and 0 GitHub Releases. GitHub's trailing 14-day owner traffic aggregate recorded 0 views and 0 clones.
 
-| Signal | Current public fact |
-|---|---|
-| Public repository | Available at `Menglook/codexpro-runtime` |
-| npm package | Not published |
-| GitHub Release | None |
-| Public hosted service | None |
-| Default telemetry | None added for this public release |
-| Public user count | Not claimed |
-| Public case studies | Not yet published |
+The npm package is not published, so weekly and monthly downloads are **not applicable**, not zero. No public user count, independent case study, or third-party testimonial is claimed.
 
-The larger private operational implementation has informed this sanitized runtime, but private usage is not presented as public adoption. Metrics from the upstream `rebel0789/codexpro` project are also not metrics of this repository.
-
-Adoption evidence will be documented only when it is attributable, timestamped, and publicly verifiable.
+See [Adoption evidence](docs/adoption.md) for sources, methods, live badges, maintainer-operated validation scenarios, the voluntary feedback route, and the explicit separation between this repository and upstream ecosystem metrics.
 
 ## Public and private boundary
 
@@ -285,6 +277,7 @@ See [Public boundary](docs/public-boundary.md).
 | [Architecture](docs/architecture.md) | Runtime layers, data flow, and component boundaries |
 | [Security model](docs/security-model.md) | Product boundary, threat assumptions, and safer defaults |
 | [Maintainer workflows](docs/maintainer-workflows.md) | PR, issue, release, and security workflow patterns |
+| [Adoption evidence](docs/adoption.md) | Attributable metrics, measurement method, use-case classification, and feedback route |
 | [Public boundary](docs/public-boundary.md) | What is intentionally included and excluded |
 | [Troubleshooting](docs/troubleshooting.md) | Common source-preview setup and validation failures |
 | [Security policy](SECURITY.md) | Vulnerability reporting and hard security rules |

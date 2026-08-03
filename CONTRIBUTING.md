@@ -9,6 +9,7 @@ Read:
 - [README.md](README.md)
 - [Architecture](docs/architecture.md)
 - [Security model](docs/security-model.md)
+- [Adoption evidence](docs/adoption.md)
 - [Public boundary](docs/public-boundary.md)
 
 Changes must remain generic and independent of private operational configuration.
@@ -71,6 +72,10 @@ Do not include:
 - Distinguish source preview, npm package, release, app, and hosted-service status.
 - Use `/path/to/repo` and `codexpro.example.com` placeholders.
 - Do not claim upstream metrics as this repository's adoption.
+
+## Share a real use case
+
+Use the [Adoption feedback issue form](https://github.com/Menglook/codexpro-runtime/issues/new?template=adoption-feedback.yml) to share a reproducible public use case. Participation is voluntary and no payment, review incentive, or other reward is offered. Do not include private source, credentials, customer data, production details, or vulnerability information. Quotations require the author's explicit optional permission in the form.
 
 ## Security changes
 
