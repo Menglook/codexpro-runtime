@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability report
+    url: https://github.com/Menglook/codexpro-runtime/security/advisories/new
+    about: Submit vulnerabilities privately. Do not disclose credentials, private source, customer data, or exploit details in a public issue.
+  - name: Contribution guide
+    url: https://github.com/Menglook/codexpro-runtime/blob/main/CONTRIBUTING.md
+    about: Read setup, scope, validation, licensing, and review expectations before contributing.

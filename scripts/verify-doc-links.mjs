@@ -9,6 +9,9 @@ const topLevelDocuments = [
   'README.zh-CN.md',
   'CONTRIBUTING.md',
   'SECURITY.md',
+  'GOVERNANCE.md',
+  'ROADMAP.md',
+  'CODE_OF_CONDUCT.md',
   'NOTICE.md',
   'PUBLIC_LAUNCH_CHECKLIST.md'
 ];

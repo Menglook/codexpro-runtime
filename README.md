@@ -12,7 +12,7 @@
 
 CodexPro Runtime turns an explicitly allowed source workspace into a bounded tool surface for AI-assisted engineering. It combines workspace isolation, MCP transports, controlled file and command tools, durable execution records, validation primitives, and human review boundaries in one local runtime.
 
-[中文说明](README.zh-CN.md) · [Quickstart](docs/quickstart.md) · [Architecture](docs/architecture.md) · [Security model](docs/security-model.md) · [Maintainer workflows](docs/maintainer-workflows.md) · [Adoption evidence](docs/adoption.md) · [Public boundary](docs/public-boundary.md)
+[中文说明](README.zh-CN.md) · [Quickstart](docs/quickstart.md) · [Architecture](docs/architecture.md) · [Security model](docs/security-model.md) · [Governance](GOVERNANCE.md) · [Roadmap](ROADMAP.md) · [Contributing](CONTRIBUTING.md) · [Adoption evidence](docs/adoption.md)
 
 > **Source preview.** The GitHub repository is public. The npm package `@menglook/codexpro` is intentionally not published and `package.json` remains `private: true`. No GitHub Release, Pages deployment, hosted relay, or managed service is provided.
 
@@ -281,7 +281,10 @@ See [Public boundary](docs/public-boundary.md).
 | [Public boundary](docs/public-boundary.md) | What is intentionally included and excluded |
 | [Troubleshooting](docs/troubleshooting.md) | Common source-preview setup and validation failures |
 | [Security policy](SECURITY.md) | Vulnerability reporting and hard security rules |
-| [Contributing](CONTRIBUTING.md) | Contribution setup and review expectations |
+| [Governance](GOVERNANCE.md) | Current maintainer authority, decisions, releases, and succession |
+| [Roadmap](ROADMAP.md) | Now/Next/Later direction and real contribution Issues |
+| [Code of Conduct](CODE_OF_CONDUCT.md) | Participation standards and private reporting |
+| [Contributing](CONTRIBUTING.md) | Issue routes, setup, validation, licensing, and review expectations |
 | [Public launch checklist](PUBLIC_LAUNCH_CHECKLIST.md) | Gates before npm, release, app, or hosted announcements |
 | [Notices](NOTICE.md) | Upstream attribution and independent-maintainer status |
 
@@ -289,14 +292,9 @@ See [Public boundary](docs/public-boundary.md).
 
 The repository is currently a source preview rather than a stable packaged release.
 
-Planned work is tracked in stages:
+Public governance, structured Issue and pull-request entry points, the required label set, and four bounded newcomer tasks are now available. Current work is tracked in [ROADMAP.md](ROADMAP.md), including Issues [#1](https://github.com/Menglook/codexpro-runtime/issues/1), [#2](https://github.com/Menglook/codexpro-runtime/issues/2), [#3](https://github.com/Menglook/codexpro-runtime/issues/3), and [#4](https://github.com/Menglook/codexpro-runtime/issues/4).
 
-- public positioning and documentation;
-- attributable adoption evidence;
-- community governance and contributor entry points;
-- repeatable release and maintenance processes.
-
-No roadmap item should be interpreted as a promise of a release date or external product support.
+GitHub Discussions remains disabled until recurring Q&A or announcements justify a separately moderated channel. No roadmap item should be interpreted as a promise of a release date or external product support.
 
 ## Contributing
 
@@ -314,7 +312,7 @@ npm run pack:dry-run
 
 Do not include credentials, private repository contents, production URLs, customer data, local reports, or private machine paths.
 
-Read [CONTRIBUTING.md](CONTRIBUTING.md) for the full checklist.
+Read [CONTRIBUTING.md](CONTRIBUTING.md) for Issue routes, focused validation, licensing, AI-assistance disclosure, and review expectations. Project authority is documented in [GOVERNANCE.md](GOVERNANCE.md), and all participation follows [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 
 ## Security reporting
 

@@ -10,7 +10,7 @@ Security statements in this repository apply only to the public source actually 
 
 ## Reporting
 
-Report security issues privately before opening a public issue. Use GitHub private vulnerability reporting when enabled. Otherwise contact the repository owner through a private channel listed on the maintainer's GitHub profile.
+Report security issues through the repository's [GitHub private vulnerability reporting form](https://github.com/Menglook/codexpro-runtime/security/advisories/new) before opening a public Issue. The private reporting feature is enabled for this repository.
 
 Do not include secrets, private repository contents, customer data, tunnel credentials, `.env` values, or active exploit details in a public report.
 

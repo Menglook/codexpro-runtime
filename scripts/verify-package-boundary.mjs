@@ -42,12 +42,16 @@ const required = [
   'LICENSE',
   'NOTICE.md',
   'SECURITY.md',
+  'GOVERNANCE.md',
+  'ROADMAP.md',
+  'CODE_OF_CONDUCT.md',
   'CONTRIBUTING.md',
   'PUBLIC_LAUNCH_CHECKLIST.md',
   'docs/quickstart.md',
   'docs/architecture.md',
   'docs/security-model.md',
   'docs/maintainer-workflows.md',
+  'docs/adoption.md',
   'docs/public-boundary.md',
   'docs/troubleshooting.md'
 ];

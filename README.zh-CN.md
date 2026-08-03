@@ -12,7 +12,7 @@
 
 CodexPro Runtime 把一个明确授权的源码工作区转换为受边界约束的 AI 工程工具面：统一提供工作区隔离、MCP 传输、受控文件与命令工具、Durable 执行记录、验收原语和人类复核边界。
 
-[English](README.md) · [快速开始](docs/quickstart.md) · [架构](docs/architecture.md) · [安全模型](docs/security-model.md) · [维护者工作流](docs/maintainer-workflows.md) · [采用证据](docs/adoption.md) · [公开边界](docs/public-boundary.md)
+[English](README.md) · [快速开始](docs/quickstart.md) · [架构](docs/architecture.md) · [安全模型](docs/security-model.md) · [治理](GOVERNANCE.md) · [路线图](ROADMAP.md) · [贡献指南](CONTRIBUTING.md) · [采用证据](docs/adoption.md)
 
 > **源码预览阶段。** GitHub 仓库已经公开，但 npm 包 `@menglook/codexpro` 尚未发布，`package.json` 继续保持 `private: true`。当前没有 GitHub Release、Pages、托管中继或公共 SaaS 服务。
 
@@ -246,7 +246,10 @@ npm 包尚未发布，因此周下载量和月下载量应标记为**不适用**
 | [公开边界](docs/public-boundary.md) | 明确公开与排除内容 |
 | [故障排查](docs/troubleshooting.md) | 源码预览常见安装和验收问题 |
 | [安全政策](SECURITY.md) | 漏洞报告与硬性安全规则 |
-| [贡献指南](CONTRIBUTING.md) | 本地设置和 Review 要求 |
+| [治理](GOVERNANCE.md) | 当前维护权限、决策、发布与继任机制 |
+| [路线图](ROADMAP.md) | Now/Next/Later 方向和真实贡献 Issues |
+| [行为准则](CODE_OF_CONDUCT.md) | 参与规范与私密报告方式 |
+| [贡献指南](CONTRIBUTING.md) | Issue 入口、环境、验收、许可和 Review 要求 |
 | [公开发布清单](PUBLIC_LAUNCH_CHECKLIST.md) | npm、Release、App 或托管公告前的门禁 |
 | [归属说明](NOTICE.md) | 上游归属和独立维护身份 |
 
@@ -254,13 +257,9 @@ npm 包尚未发布，因此周下载量和月下载量应标记为**不适用**
 
 当前仓库是源码预览，而不是稳定 npm Release。
 
-后续工作将分阶段完成：
+公开治理、结构化 Issue/PR 入口、计划要求的标签体系以及四个边界清晰的首次贡献任务已经建立。当前工作见 [ROADMAP.md](ROADMAP.md)，包括 Issues [#1](https://github.com/Menglook/codexpro-runtime/issues/1)、[#2](https://github.com/Menglook/codexpro-runtime/issues/2)、[#3](https://github.com/Menglook/codexpro-runtime/issues/3) 和 [#4](https://github.com/Menglook/codexpro-runtime/issues/4)。
 
-- 可归属的采用证据；
-- 社区治理和贡献者入口；
-- 可重复 Release 与维护流程。
-
-路线图不构成发布日期或外部产品支持承诺。
+GitHub Discussions 暂不启用，待出现持续问答或公告需求后再评估。路线图不构成发布日期或外部产品支持承诺。
 
 ## 参与贡献
 
@@ -276,7 +275,7 @@ npm run pack:dry-run
 
 不得提交凭证、私有仓库内容、生产 URL、客户数据、本地报告或真实机器路径。
 
-详见 [CONTRIBUTING.md](CONTRIBUTING.md)。
+Issue 入口、定向验收、许可、AI 辅助披露和 Review 要求见 [CONTRIBUTING.md](CONTRIBUTING.md)；项目权限见 [GOVERNANCE.md](GOVERNANCE.md)；所有参与者须遵循 [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)。
 
 ## 安全报告
 

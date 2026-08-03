@@ -1,0 +1,92 @@
+name: Bug report
+description: Report a reproducible problem in the public source repository.
+title: "[Bug]: "
+labels:
+  - bug
+  - needs reproduction
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting a public-source problem. Do not include credentials, private source, customer data, production details, local evidence stores, or vulnerability information. Use SECURITY.md for security reports.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What public behavior is incorrect?
+    validations:
+      required: true
+
+  - type: input
+    id: revision
+    attributes:
+      label: Public revision
+      description: Commit SHA, branch, or source-preview version.
+      placeholder: "Example: main at abc1234"
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Operating system, Node.js version, npm version, transport, and relevant non-sensitive mode settings.
+      placeholder: "Example: Windows 11 with WSL2, Node.js 20, MCP over stdio"
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Provide numbered steps using a disposable or public repository and placeholders.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior and sanitized evidence
+      description: Include bounded output or public links. Redact secrets, private paths, file contents, and customer information.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: side_effect
+    attributes:
+      label: Highest side-effect level involved
+      options:
+        - Read-only inspection
+        - Workspace file write
+        - Local command execution
+        - Network read
+        - External write or Git operation
+        - Unknown
+    validations:
+      required: true
+
+  - type: textarea
+    id: validation
+    attributes:
+      label: Checks already run
+      description: List exact commands, results, and what was not tested.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety confirmation
+      options:
+        - label: I removed credentials, private source, customer data, production identifiers, private paths, and vulnerability details.
+          required: true
+        - label: I can reproduce this against the public repository or a sanitized disposable fixture.
+          required: true

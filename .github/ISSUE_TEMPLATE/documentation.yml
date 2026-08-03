@@ -1,0 +1,59 @@
+name: Documentation improvement
+description: Report unclear, missing, outdated, or incorrect public documentation.
+title: "[Docs]: "
+labels:
+  - documentation
+body:
+  - type: input
+    id: location
+    attributes:
+      label: Document or public link
+      placeholder: "Example: docs/quickstart.md or a public repository URL"
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is unclear or incorrect?
+      description: Quote only the minimum text needed and do not include private data.
+    validations:
+      required: true
+
+  - type: textarea
+    id: correction
+    attributes:
+      label: Proposed correction
+      description: State the concrete behavior, command, boundary, or example the documentation should describe.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: audience
+    attributes:
+      label: Primary audience
+      options:
+        - First-time source user
+        - Contributor
+        - Maintainer
+        - Security reviewer
+        - MCP integrator
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: validation
+    attributes:
+      label: How can the correction be verified?
+      description: Include a public file reference or focused command when applicable.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety confirmation
+      options:
+        - label: The report contains no credentials, private paths, customer data, production identity, or vulnerability details.
+          required: true
