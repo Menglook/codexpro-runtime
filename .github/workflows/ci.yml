@@ -47,3 +47,9 @@ jobs:
 
       - name: Verify package boundary
         run: npm run package:check
+
+      - name: Verify release readiness
+        run: npm run release:readiness
+
+      - name: Verify fresh tarball install
+        run: npm run fresh-install:check

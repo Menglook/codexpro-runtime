@@ -14,8 +14,9 @@ Passing one gate does not authorize or certify the others.
 | Gate | Status |
 |---|---|
 | Public source repository | Open |
-| Source CI | Configured |
-| npm package `@menglook/codexpro` | Not published |
+| Source candidate `0.1.0` | Buildable, packable, and fresh-install verified; not released |
+| Source CI | Configured with docs, build, security, demo, package, readiness, and fresh-install gates |
+| npm package `@menglook/codexpro` | Not published; manifest remains `private: true` |
 | GitHub Release | None |
 | GitHub Pages | Not deployed |
 | Reviewed public ChatGPT app | Not claimed |

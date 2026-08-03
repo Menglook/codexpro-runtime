@@ -34,6 +34,7 @@
     "browser-skills-builtin",
     "scripts",
     "docs",
+    ".github/assets",
     "README.md",
     "README.zh-CN.md",
     "NOTICE.md",
@@ -43,7 +44,8 @@
     "ROADMAP.md",
     "CODE_OF_CONDUCT.md",
     "CONTRIBUTING.md",
-    "PUBLIC_LAUNCH_CHECKLIST.md"
+    "PUBLIC_LAUNCH_CHECKLIST.md",
+    "CHANGELOG.md"
   ],
   "bin": {
     "codexpro-mcp": "dist/stdio.js",
@@ -62,7 +64,9 @@
     "demo:video": "node scripts/render-demo-video.mjs",
     "pack:dry-run": "npm pack --dry-run --json",
     "package:check": "node scripts/verify-package-boundary.mjs",
-    "check": "npm run docs:check && npm run typecheck && npm run build && npm run cli:help && npm run security:check && npm run demo:check && npm run package:check"
+    "release:readiness": "node scripts/verify-release-readiness.mjs",
+    "fresh-install:check": "node scripts/fresh-install-smoke.mjs",
+    "check": "npm run docs:check && npm run typecheck && npm run build && npm run cli:help && npm run security:check && npm run demo:check && npm run package:check && npm run release:readiness && npm run fresh-install:check"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "1.29.0",
