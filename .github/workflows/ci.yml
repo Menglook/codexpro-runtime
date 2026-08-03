@@ -39,5 +39,8 @@ jobs:
       - name: Verify CLI help
         run: npm run cli:help
 
+      - name: Verify security controls
+        run: npm run security:check
+
       - name: Verify package boundary
         run: npm run package:check
