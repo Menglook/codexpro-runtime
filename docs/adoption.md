@@ -46,6 +46,30 @@ used for the OSS application evidence package.
 A zero value is still a valid baseline. It must not be rewritten as adoption, hidden, or
 combined with metrics from another repository.
 
+## Application-preparation snapshot
+
+**Captured:** 2026-08-03 18:31:25 UTC  
+**Purpose:** final public-fact freeze before preparing the application copy; this is not a submission receipt
+
+| Signal | Snapshot | Interpretation |
+|---|---:|---|
+| Stars | 0 | Still no repository-interest signal |
+| Forks | 0 | Still no attributable fork |
+| Watchers / subscribers | 0 | Still no notification subscriber |
+| Contributors | 1 | Repository owner only; 10 attributed contributions before this snapshot-update commit |
+| Open / closed issues | 4 / 0 | Maintainer-created contribution and feedback tasks; not external adoption |
+| Open / merged / closed PRs | 0 / 0 / 0 | No pull-request review or merge event is claimed |
+| Public CI runs | 7 successful / 0 failed | Repository checks only; not a deployment or active-user measure |
+| Repository views, trailing 14 days | 0 total / 0 unique | Owner-authorized GitHub aggregate |
+| Repository clones, trailing 14 days | 0 total / 0 unique | Owner-authorized GitHub aggregate |
+| Popular referrers | 0 | No attributable referrer is claimed |
+| npm package | Not published | Registry returned package-not-found; downloads remain not applicable |
+| Git tags / GitHub Releases / Pages | 0 / 0 / not configured | Public source candidate only |
+| Independently attributable public case studies | 0 | Final Adoption Acceptance remains open |
+
+This later snapshot records maintenance and governance activity after the initial baseline.
+It does not convert maintainer-created issues, commits, or CI runs into user adoption.
+
 ## Measurement method
 
 ### GitHub repository metadata

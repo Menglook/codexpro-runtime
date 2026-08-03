@@ -205,10 +205,13 @@ CodexPro Runtime 不是：
 公开 CI 执行：
 
 1. 禁用生命周期脚本安装依赖；
-2. TypeScript Typecheck；
-3. TypeScript Build；
+2. 文档链接检查；
+3. TypeScript Typecheck 与 Build；
 4. CLI Help 验证；
-5. npm 打包内容 Dry Run。
+5. 可复现的安全控制和演示验收；
+6. npm Package Boundary；
+7. 源码候选 Release Readiness；
+8. 在清洁临时消费者项目中安装真实本地 Tarball。
 
 公开导出还需要净化边界和敏感信息扫描。私有实现仍是生产专用集成和内部证据的权威来源。
 
@@ -216,7 +219,7 @@ CI 通过只表示该公开提交通过了仓库级检查，不代表任何部�
 
 ## Adoption Snapshot
 
-可归属基线采集于 **2026-08-03 16:46:44 UTC**：Stars 0、Forks 0、Watchers 0、贡献者 1、近 30 天和近 90 天提交均为 3、Issues 0、Pull Requests 0、GitHub Releases 0；GitHub 维护者可见的近 14 天聚合流量为 Views 0、Clones 0。
+申请准备快照采集于 **2026-08-03 18:31:25 UTC**：Stars 0、Forks 0、Watchers 0、贡献者 1（10 个归属贡献）、开放 Issues 4、Pull Requests 0、GitHub Releases 0，公开 CI 7 次全部成功；GitHub 维护者可见的近 14 天聚合流量为 Views 0、Clones 0。仓库创建时的原始零基线继续保留在[采用证据](docs/adoption.md)中。
 
 npm 包尚未发布，因此周下载量和月下载量应标记为**不适用**，不能写成 0。当前不声明公共用户数、独立案例或第三方证言。
 

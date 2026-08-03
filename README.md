@@ -240,10 +240,13 @@ For a fuller walkthrough, read [Quickstart](docs/quickstart.md). Do not expose t
 The public CI workflow runs:
 
 1. dependency installation with lifecycle scripts disabled;
-2. TypeScript type checking;
-3. TypeScript build;
+2. documentation-link checks;
+3. TypeScript type checking and build;
 4. CLI help verification;
-5. npm package-content dry run.
+5. reproducible security-control and demo checks;
+6. npm package-boundary verification;
+7. source-candidate release-readiness checks; and
+8. a real local-tarball fresh install in a clean temporary consumer project.
 
 Local publication additionally requires a sanitized export boundary and secret scan. The private implementation remains the authority for production-only integrations and internal evidence.
 
@@ -251,7 +254,7 @@ A green CI result means the checked public source revision passed these reposito
 
 ## Adoption snapshot
 
-The attributable baseline captured at **2026-08-03 16:46:44 UTC** records 0 stars, 0 forks, 0 watchers, 1 contributor, 3 commits in both the preceding 30-day and 90-day windows, 0 issues, 0 pull requests, and 0 GitHub Releases. GitHub's trailing 14-day owner traffic aggregate recorded 0 views and 0 clones.
+The application-preparation snapshot captured at **2026-08-03 18:31:25 UTC** records 0 stars, 0 forks, 0 watchers, 1 contributor with 10 attributed contributions, 4 open issues, 0 pull requests, 0 GitHub Releases, and 7 successful public CI runs. GitHub's trailing 14-day owner traffic aggregate recorded 0 views and 0 clones. The earlier repository-creation baseline remains preserved in [Adoption evidence](docs/adoption.md).
 
 The npm package is not published, so weekly and monthly downloads are **not applicable**, not zero. No public user count, independent case study, or third-party testimonial is claimed.
 
