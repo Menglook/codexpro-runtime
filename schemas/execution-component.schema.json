@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codexpro.local/schemas/execution-component.schema.json",
+  "title": "CodexPro Execution Component v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "component_id", "kind", "task_id", "run_id", "owner_id", "fencing_token", "registered_at", "last_liveness_at", "last_progress_at", "last_transition_at", "expected_silence_until", "no_progress_deadline", "hard_deadline", "state", "progress_marker", "terminal_reason", "evidence_ref"],
+  "properties": {
+    "version": { "const": 1 },
+    "component_id": { "type": "string", "minLength": 1 },
+    "kind": { "enum": ["model_stream", "tool_process", "worker"] },
+    "task_id": { "type": ["string", "null"] },
+    "run_id": { "type": ["string", "null"] },
+    "owner_id": { "type": ["string", "null"] },
+    "fencing_token": { "type": ["integer", "null"], "minimum": 0 },
+    "registered_at": { "type": "string", "minLength": 1 },
+    "last_liveness_at": { "type": ["string", "null"] },
+    "last_progress_at": { "type": ["string", "null"] },
+    "last_transition_at": { "type": "string", "minLength": 1 },
+    "expected_silence_until": { "type": ["string", "null"] },
+    "no_progress_deadline": { "type": ["string", "null"] },
+    "hard_deadline": { "type": ["string", "null"] },
+    "state": { "enum": ["registered", "idle", "running", "expected_silence", "stale", "terminating", "terminal"] },
+    "progress_marker": { "type": ["string", "null"] },
+    "terminal_reason": { "type": ["string", "null"] },
+    "evidence_ref": { "type": ["string", "null"] }
+  }
+}

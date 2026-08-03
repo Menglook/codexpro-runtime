@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CodexPro Acceptance Profile",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "default_profile": { "type": "string" },
+    "profiles": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "description": { "type": "string" },
+          "alias_profile": { "type": "string", "minLength": 1 },
+          "dynamic_test_impact": { "type": "boolean" },
+          "test_impact_level": {
+            "type": "string",
+            "enum": ["targeted", "component", "release"]
+          },
+          "include_build": { "type": "boolean" },
+          "commands": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["command"],
+              "properties": {
+                "name": { "type": "string" },
+                "command": { "type": "string" },
+                "cwd": { "type": "string" },
+                "timeout_ms": { "type": "integer", "minimum": 1000, "maximum": 300000 },
+                "resource_profile": {
+                  "type": "string",
+                  "enum": ["acceptance-test", "acceptance-full-test"]
+                },
+                "test_scope": {
+                  "type": "string",
+                  "enum": ["targeted", "full"]
+                },
+                "allow_full_test": { "type": "boolean" },
+                "max_workers": { "type": "integer", "minimum": 1, "maximum": 2 },
+                "require_non_watch_mode": { "type": "boolean" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

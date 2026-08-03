@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codexpro.local/schemas/browser-inspection-result.schema.json",
+  "title": "CodexPro Browser Inspection Result v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "inspection_id", "session_id", "space_id", "page_id", "semantic_snapshot_id", "semantic_completeness", "visual_requested", "visual_reason", "visual_scope", "facts", "conflicts", "limitations", "redacted", "report_path", "created_at"],
+  "properties": {
+    "version": { "const": 1 },
+    "inspection_id": { "$ref": "#/$defs/non_empty" },
+    "session_id": { "$ref": "#/$defs/non_empty" },
+    "space_id": { "$ref": "#/$defs/non_empty", "default": "default" },
+    "page_id": { "$ref": "#/$defs/non_empty" },
+    "semantic_snapshot_id": { "$ref": "#/$defs/non_empty" },
+    "semantic_completeness": { "enum": ["complete", "partial", "sampled", "unknown"] },
+    "visual_requested": { "type": "boolean" },
+    "visual_reason": { "type": ["string", "null"], "enum": ["layout", "image_crop", "responsive", "style", "canvas", "video", "cross_origin_frame", "semantic_empty", "semantic_conflict", "manual", null] },
+    "visual_scope": { "type": ["object", "null"], "$ref": "#/$defs/visual_scope" },
+    "facts": { "type": "array", "items": { "$ref": "#/$defs/fact" } },
+    "conflicts": { "type": "array", "items": { "$ref": "#/$defs/non_empty" } },
+    "limitations": { "type": "array", "items": { "$ref": "#/$defs/non_empty" } },
+    "redacted": { "const": true },
+    "report_path": { "$ref": "#/$defs/relative_path" },
+    "created_at": { "type": "string", "format": "date-time" }
+  },
+  "allOf": [
+    { "if": { "properties": { "visual_requested": { "const": false } }, "required": ["visual_requested"] }, "then": { "properties": { "visual_reason": { "const": null }, "visual_scope": { "const": null } } } },
+    { "if": { "properties": { "visual_requested": { "const": true } }, "required": ["visual_requested"] }, "then": { "properties": { "visual_reason": { "type": "string" }, "visual_scope": { "type": "object" } } } }
+  ],
+  "$defs": {
+    "non_empty": { "type": "string", "minLength": 1 },
+    "relative_path": { "type": "string", "minLength": 1, "pattern": "^(?!/)(?!.*\\.\\.)" },
+    "visual_scope": {
+      "type": ["object", "null"], "additionalProperties": false,
+      "properties": { "kind": { "enum": ["viewport", "selector", "region", "frame"] }, "target": { "type": "string" } }
+    },
+    "fact": {
+      "type": "object", "additionalProperties": false,
+      "required": ["fact", "value", "source", "confidence", "semantic_evidence_refs", "visual_evidence_refs", "conflict", "limitations"],
+      "properties": {
+        "fact": { "$ref": "#/$defs/non_empty" },
+        "value": {},
+        "source": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "enum": ["semantic", "visual", "network"] } },
+        "confidence": { "enum": ["high", "medium", "low", "unknown"] },
+        "semantic_evidence_refs": { "type": "array", "items": { "$ref": "#/$defs/non_empty" } },
+        "visual_evidence_refs": { "type": "array", "items": { "$ref": "#/$defs/non_empty" } },
+        "conflict": { "type": "boolean" },
+        "limitations": { "type": "array", "items": { "$ref": "#/$defs/non_empty" } }
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "skill_id": "generic.readonly.page_summary",
+  "page_ref": "generic.demo-page",
+  "redacted": true,
+  "task_context": {
+    "platform": "generic",
+    "shop": "Redacted Demo",
+    "business_object_type": "page",
+    "business_object_id": "demo",
+    "business_object_display_name": "Demo page"
+  },
+  "snapshot": {
+    "url": "https://example.invalid/demo",
+    "title": "Generic Demo",
+    "text": "Summary Redacted Demo page",
+    "elements": [],
+    "accessibility": [],
+    "tables": []
+  }
+}

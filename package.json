@@ -1,0 +1,61 @@
+{
+  "name": "@menglook/codexpro",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A sanitized public runtime for evidence-driven MCP and Codex workflows, maintained by Menglook.",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Menglook/codexpro-runtime.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Menglook/codexpro-runtime/issues"
+  },
+  "homepage": "https://github.com/Menglook/codexpro-runtime#readme",
+  "engines": {
+    "node": ">=20"
+  },
+  "files": [
+    "dist",
+    "shared",
+    "schemas",
+    "templates",
+    "chrome-extension",
+    "browser-skills-builtin",
+    "scripts",
+    "README.md",
+    "NOTICE.md",
+    "LICENSE",
+    "SECURITY.md",
+    "CONTRIBUTING.md"
+  ],
+  "bin": {
+    "codexpro-mcp": "dist/stdio.js",
+    "codexpro-mcp-http": "dist/http.js",
+    "menglook-codexpro": "scripts/codexpro-cli.mjs"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "cli:help": "node scripts/codexpro-cli.mjs --help",
+    "pack:dry-run": "npm pack --dry-run --json"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.29.0",
+    "@openai/codex-sdk": "^0.144.1",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "minimatch": "^10.0.1",
+    "playwright": "^1.54.0",
+    "yaml": "^2.9.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.0.0",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  }
+}

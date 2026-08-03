@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "id": "generic.summary",
+  "platform": "generic",
+  "page_fingerprint_ref": "generic.demo-page",
+  "fields": [
+    {
+      "key": "page_summary",
+      "metric_name": "Page summary",
+      "source": "semantic",
+      "strategies": [
+        {
+          "order": 1,
+          "method": "business_semantic",
+          "target": "Summary"
+        }
+      ],
+      "required": true
+    }
+  ],
+  "completeness_rules": {
+    "required_field_keys": [
+      "page_summary"
+    ],
+    "sample_must_not_be_reported_as_complete": true
+  },
+  "redaction_required": true
+}

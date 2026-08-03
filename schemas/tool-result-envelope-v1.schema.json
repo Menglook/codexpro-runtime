@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codexpro.local/schemas/tool-result-envelope-v1.schema.json",
+  "title": "ToolResultEnvelopeV1 compatibility wrapper",
+  "type": "object",
+  "required": ["tool_result"],
+  "properties": {
+    "tool_result": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["schema_version", "event_id", "trace_id", "tool_name", "tool_category", "operation_type", "status", "started_at", "summary"],
+      "properties": {
+        "schema_version": { "const": "tool-result-v1" },
+        "event_id": { "type": "string", "minLength": 1 },
+        "trace_id": { "type": "string", "minLength": 1 },
+        "conversation_id": { "type": "string" },
+        "task_id": { "type": "string" },
+        "stage_id": { "type": "string" },
+        "attempt_id": { "type": "string" },
+        "workspace_id": { "type": "string" },
+        "workspace_generation": { "type": "integer", "minimum": 1 },
+        "executor_id": { "type": "string" },
+        "owner_id": { "type": "string" },
+        "tool_name": { "type": "string", "minLength": 1 },
+        "tool_category": { "enum": ["workspace", "project_read", "project_write", "command", "validation", "browser", "git", "memory", "handoff", "diagnostics"] },
+        "operation_type": { "enum": ["read", "search", "write", "execute", "validate", "browser", "git", "memory", "handoff", "configuration"] },
+        "status": { "enum": ["queued", "running", "waiting_approval", "blocked", "stalled", "completed", "failed", "cancelled"] },
+        "started_at": { "type": "string", "format": "date-time" },
+        "finished_at": { "type": "string", "format": "date-time" },
+        "duration_ms": { "type": "integer", "minimum": 0 },
+        "summary": { "type": "string", "minLength": 1 },
+        "affected_paths": { "type": "array", "items": { "type": "string" } },
+        "evidence_refs": { "type": "array", "items": { "type": "object" } },
+        "error": { "type": ["object", "null"] }
+      }
+    }
+  },
+  "additionalProperties": true
+}

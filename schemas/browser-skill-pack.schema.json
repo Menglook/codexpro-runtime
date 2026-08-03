@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codexpro.local/schemas/browser-skill-pack.schema.json",
+  "title": "CodexPro Browser Skill Pack v2 Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "pack_id", "platform", "pack_version", "layer", "compatible_runtime", "status", "skill_contract_hash", "verified_at", "verified_pages", "resources", "promotion_policy"],
+  "properties": {
+    "version": { "const": 2 },
+    "pack_id": { "$ref": "#/$defs/id" },
+    "platform": { "$ref": "#/$defs/non_empty" },
+    "pack_version": { "$ref": "#/$defs/non_empty" },
+    "platform_version_hint": { "type": "string" },
+    "layer": { "enum": ["workspace", "user", "builtin"] },
+    "compatible_runtime": { "$ref": "#/$defs/non_empty" },
+    "status": { "enum": ["active", "warning", "quarantined", "retired"] },
+    "skill_contract_hash": { "$ref": "#/$defs/sha256" },
+    "verified_at": { "type": ["string", "null"], "format": "date-time" },
+    "verified_pages": { "type": "array", "items": { "$ref": "#/$defs/non_empty" }, "uniqueItems": true },
+    "resources": {
+      "type": "object", "additionalProperties": false,
+      "required": ["pages", "navigation", "extractors", "workflows", "recovery", "fixtures"],
+      "properties": {
+        "pages": { "$ref": "#/$defs/path_list" },
+        "navigation": { "$ref": "#/$defs/path_list" },
+        "extractors": { "$ref": "#/$defs/path_list" },
+        "workflows": { "$ref": "#/$defs/path_list" },
+        "recovery": { "$ref": "#/$defs/path_list" },
+        "fixtures": { "$ref": "#/$defs/path_list" }
+      }
+    },
+    "promotion_policy": {
+      "type": "object", "additionalProperties": false,
+      "required": ["automatic_long_term_write", "requires_redaction_scan", "requires_duplicate_check", "requires_targeted_regression", "requires_explicit_user_approval"],
+      "properties": {
+        "automatic_long_term_write": { "const": false },
+        "requires_redaction_scan": { "const": true },
+        "requires_duplicate_check": { "const": true },
+        "requires_targeted_regression": { "const": true },
+        "requires_explicit_user_approval": { "const": true }
+      }
+    }
+  },
+  "$defs": {
+    "non_empty": { "type": "string", "minLength": 1 },
+    "id": { "type": "string", "minLength": 1, "pattern": "^[a-z0-9][a-z0-9._-]*$" },
+    "sha256": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "relative_path": { "type": "string", "minLength": 1, "pattern": "^(?!/)(?!.*\\.\\.)" },
+    "path_list": { "type": "array", "items": { "$ref": "#/$defs/relative_path" }, "uniqueItems": true }
+  }
+}

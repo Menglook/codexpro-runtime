@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codexpro.local/schemas/browser-table-extraction.schema.json",
+  "title": "CodexPro Browser Table Extraction v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "extraction_id", "snapshot_id", "session_id", "space_id", "page_id", "table_ref", "columns", "rows", "unique_key", "loaded_range", "limits", "completeness", "possible_more", "redacted", "evidence_path"],
+  "properties": {
+    "version": { "const": 1 },
+    "extraction_id": { "$ref": "#/$defs/non_empty" },
+    "snapshot_id": { "$ref": "#/$defs/non_empty" },
+    "session_id": { "$ref": "#/$defs/non_empty" },
+    "space_id": { "$ref": "#/$defs/non_empty", "default": "default" },
+    "page_id": { "$ref": "#/$defs/non_empty" },
+    "table_ref": { "$ref": "#/$defs/non_empty" },
+    "columns": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/column" } },
+    "rows": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+    "unique_key": { "type": ["string", "null"] },
+    "deduplicated_rows": { "type": "integer", "minimum": 0 },
+    "loaded_range": {
+      "type": "object", "additionalProperties": false, "required": ["start", "end"],
+      "properties": { "start": { "type": "integer", "minimum": 0 }, "end": { "type": "integer", "minimum": 0 } }
+    },
+    "limits": {
+      "type": "object", "additionalProperties": false, "required": ["max_rows", "max_scrolls", "scrolls_used"],
+      "properties": {
+        "max_rows": { "type": "integer", "minimum": 1 },
+        "max_scrolls": { "type": "integer", "minimum": 0, "maximum": 20 },
+        "scrolls_used": { "type": "integer", "minimum": 0, "maximum": 20 }
+      }
+    },
+    "completeness": { "enum": ["complete", "partial", "sampled", "unknown"] },
+    "possible_more": { "type": "boolean" },
+    "redacted": { "const": true },
+    "limitations": { "type": "array", "items": { "$ref": "#/$defs/non_empty" } },
+    "evidence_path": { "$ref": "#/$defs/relative_path" }
+  },
+  "$defs": {
+    "non_empty": { "type": "string", "minLength": 1 },
+    "relative_path": { "type": "string", "minLength": 1, "pattern": "^(?!/)(?!.*\\.\\.)" },
+    "column": {
+      "type": "object", "additionalProperties": false, "required": ["key", "label"],
+      "properties": { "key": { "$ref": "#/$defs/non_empty" }, "label": { "$ref": "#/$defs/non_empty" }, "unit": { "type": "string" } }
+    }
+  }
+}

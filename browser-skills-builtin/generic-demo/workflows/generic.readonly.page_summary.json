@@ -1,0 +1,46 @@
+{
+  "version": 2,
+  "id": "generic.readonly.page_summary",
+  "platform": "generic",
+  "intent": "Demonstrate a platform-neutral read-only Browser Skill Pack workflow.",
+  "risk_class": "R0",
+  "page_ref": "generic.demo-page",
+  "extractor_refs": [
+    "generic.summary"
+  ],
+  "required_context": {
+    "shop_context_required": true,
+    "shop_context_visible_required": false,
+    "business_object_visible_required": false
+  },
+  "locate_order": [
+    "business_semantic_accessible_name",
+    "stable_element_ref",
+    "role_name",
+    "stable_selector",
+    "local_visual_confirmation"
+  ],
+  "steps": [
+    {
+      "id": "observe",
+      "action": "observe",
+      "description": "Observe a generic page.",
+      "readonly": true,
+      "auto_retry": false
+    },
+    {
+      "id": "report",
+      "action": "report",
+      "description": "Report a generic summary.",
+      "readonly": true,
+      "auto_retry": false
+    }
+  ],
+  "handoff": {
+    "required": false,
+    "trigger_conditions": [
+      "page fingerprint mismatch"
+    ]
+  },
+  "recovery_ref": "generic.safe-recovery"
+}

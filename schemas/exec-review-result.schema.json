@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CodexPro Exec Review Result v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["ok", "summary", "findings", "reviewed_files", "uncovered_scope", "error"],
+  "properties": {
+    "ok": {
+      "type": "boolean"
+    },
+    "summary": {
+      "type": "string",
+      "maxLength": 20000
+    },
+    "findings": {
+      "type": "array",
+      "maxItems": 500,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["severity", "file", "line", "issue", "impact", "evidence", "recommendation", "confidence"],
+        "properties": {
+          "severity": {
+            "type": "string",
+            "enum": ["P0", "P1", "P2", "P3"]
+          },
+          "file": {
+            "type": "string",
+            "maxLength": 1000
+          },
+          "line": {
+            "type": ["integer", "null"],
+            "minimum": 1
+          },
+          "issue": {
+            "type": "string",
+            "maxLength": 10000
+          },
+          "impact": {
+            "type": "string",
+            "maxLength": 10000
+          },
+          "evidence": {
+            "type": "string",
+            "maxLength": 10000
+          },
+          "recommendation": {
+            "type": "string",
+            "maxLength": 10000
+          },
+          "confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      }
+    },
+    "reviewed_files": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 1000
+      },
+      "maxItems": 1000
+    },
+    "uncovered_scope": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 2000
+      },
+      "maxItems": 500
+    },
+    "error": {
+      "type": ["string", "null"],
+      "maxLength": 20000
+    }
+  }
+}

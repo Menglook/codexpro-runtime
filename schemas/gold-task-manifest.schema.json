@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codexpro.dev/schemas/gold-task-manifest.schema.json",
+  "title": "CodexPro Gold Task Manifest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "suite_id", "title", "frozen_at", "target_task_count", "task_mix", "replay_input_gaps", "tasks"],
+  "properties": {
+    "version": { "const": 1 },
+    "suite_id": { "$ref": "#/$defs/nonEmptyString" },
+    "title": { "$ref": "#/$defs/nonEmptyString" },
+    "frozen_at": { "type": "string", "format": "date-time" },
+    "target_task_count": { "type": "integer", "minimum": 1 },
+    "task_mix": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "exact_code_change", "root_cause_investigation", "cross_module_refactor", "test_and_regression",
+        "browser_task", "git_delivery", "interruption_recovery", "business_data_task"
+      ],
+      "properties": {
+        "exact_code_change": { "type": "integer", "minimum": 0 },
+        "root_cause_investigation": { "type": "integer", "minimum": 0 },
+        "cross_module_refactor": { "type": "integer", "minimum": 0 },
+        "test_and_regression": { "type": "integer", "minimum": 0 },
+        "browser_task": { "type": "integer", "minimum": 0 },
+        "git_delivery": { "type": "integer", "minimum": 0 },
+        "interruption_recovery": { "type": "integer", "minimum": 0 },
+        "business_data_task": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "replay_input_gaps": { "type": "array", "items": { "$ref": "#/$defs/replayInputGap" } },
+    "tasks": { "type": "array", "items": { "$ref": "#/$defs/task" } }
+  },
+  "$defs": {
+    "nonEmptyString": { "type": "string", "minLength": 1 },
+    "stringArray": { "type": "array", "items": { "$ref": "#/$defs/nonEmptyString" }, "uniqueItems": true },
+    "nonEmptyStringArray": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/nonEmptyString" }, "uniqueItems": true },
+    "sha": { "type": "string", "pattern": "^[a-fA-F0-9]{40}$" },
+    "category": {
+      "enum": [
+        "exact_code_change", "root_cause_investigation", "cross_module_refactor", "test_and_regression",
+        "browser_task", "git_delivery", "interruption_recovery", "business_data_task"
+      ]
+    },
+    "replayInputGap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["task_id", "reason", "required_paths"],
+      "properties": {
+        "task_id": { "$ref": "#/$defs/nonEmptyString" },
+        "reason": { "$ref": "#/$defs/nonEmptyString" },
+        "required_paths": { "$ref": "#/$defs/nonEmptyStringArray" }
+      }
+    },
+    "task": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "task_id", "title", "category", "status", "source", "repository", "acceptance_requirements",
+        "forbidden_scope", "reference_solution", "constraints", "expected_completion_proof"
+      ],
+      "properties": {
+        "task_id": { "$ref": "#/$defs/nonEmptyString" },
+        "title": { "$ref": "#/$defs/nonEmptyString" },
+        "category": { "$ref": "#/$defs/category" },
+        "status": { "const": "frozen" },
+        "source": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["captured_at", "provenance", "reference", "instructions"],
+          "properties": {
+            "captured_at": { "type": "string", "format": "date-time" },
+            "provenance": { "enum": ["conversation", "execution_contract", "acceptance_report"] },
+            "reference": { "oneOf": [{ "$ref": "#/$defs/nonEmptyString" }, { "type": "null" }] },
+            "instructions": { "$ref": "#/$defs/nonEmptyStringArray" }
+          }
+        },
+        "repository": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["baseline_commit", "reference_result_commit"],
+          "properties": {
+            "baseline_commit": { "$ref": "#/$defs/sha" },
+            "reference_result_commit": { "$ref": "#/$defs/sha" }
+          }
+        },
+        "acceptance_requirements": { "$ref": "#/$defs/nonEmptyStringArray" },
+        "forbidden_scope": { "$ref": "#/$defs/nonEmptyStringArray" },
+        "reference_solution": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["key_facts", "changed_paths", "validation_commands", "evidence_paths"],
+          "properties": {
+            "key_facts": { "$ref": "#/$defs/nonEmptyStringArray" },
+            "changed_paths": { "$ref": "#/$defs/nonEmptyStringArray" },
+            "validation_commands": { "$ref": "#/$defs/nonEmptyStringArray" },
+            "evidence_paths": { "$ref": "#/$defs/stringArray" }
+          }
+        },
+        "constraints": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "max_tool_calls", "max_wall_clock_ms", "human_intervention_allowed", "external_network_allowed",
+            "model_delegation_allowed", "allowed_side_effects"
+          ],
+          "properties": {
+            "max_tool_calls": { "type": "integer", "minimum": 1 },
+            "max_wall_clock_ms": { "type": "integer", "minimum": 1 },
+            "human_intervention_allowed": { "type": "boolean" },
+            "external_network_allowed": { "type": "boolean" },
+            "model_delegation_allowed": { "type": "boolean" },
+            "allowed_side_effects": { "$ref": "#/$defs/nonEmptyStringArray" }
+          }
+        },
+        "expected_completion_proof": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["required", "evidence_kinds"],
+          "properties": {
+            "required": { "type": "boolean" },
+            "evidence_kinds": { "$ref": "#/$defs/nonEmptyStringArray" }
+          }
+        }
+      }
+    }
+  }
+}

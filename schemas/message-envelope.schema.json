@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codexpro.local/schemas/message-envelope.schema.json",
+  "title": "CodexPro Durable Message Envelope v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "message_id", "message_type", "producer", "consumer", "task_id", "run_id", "dedupe_key", "payload_ref", "payload", "payload_hash", "created_at", "available_at", "attempt", "max_attempts", "owner_id", "fencing_token", "lease_expires_at", "status", "last_error"],
+  "properties": {
+    "version": { "const": 1 },
+    "message_id": { "type": "string", "minLength": 1 },
+    "message_type": { "type": "string", "minLength": 1 },
+    "producer": { "type": "string", "minLength": 1 },
+    "consumer": { "type": "string", "minLength": 1 },
+    "task_id": { "type": ["string", "null"] },
+    "run_id": { "type": ["string", "null"] },
+    "dedupe_key": { "type": "string", "minLength": 1 },
+    "payload_ref": { "type": ["string", "null"] },
+    "payload": { "type": ["object", "null"] },
+    "payload_hash": { "type": "string", "minLength": 1 },
+    "created_at": { "type": "string", "minLength": 1 },
+    "available_at": { "type": "string", "minLength": 1 },
+    "attempt": { "type": "integer", "minimum": 0 },
+    "max_attempts": { "type": "integer", "minimum": 1 },
+    "owner_id": { "type": ["string", "null"] },
+    "fencing_token": { "type": ["integer", "null"], "minimum": 0 },
+    "lease_expires_at": { "type": ["string", "null"] },
+    "status": { "enum": ["pending", "claimed", "delivered", "acked", "retry_wait", "dead_letter"] },
+    "last_error": { "type": ["string", "null"] },
+    "replay_of": { "type": ["string", "null"] },
+    "audit": { "type": "object" }
+  },
+  "oneOf": [
+    { "required": ["payload"] },
+    { "required": ["payload_ref"] }
+  ]
+}

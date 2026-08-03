@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codexpro.local/schemas/browser-space.schema.json",
+  "title": "CodexPro Browser Task Space v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "space_id", "workspace_id", "mode", "owner_task_id", "owner_run_id", "created_at", "last_used_at", "status", "controlled_tab_ids", "active_page_id", "active_flow_id", "browser_session_id", "profile_identity_hash", "report_root", "resource_lease"],
+  "properties": {
+    "version": { "const": 1 },
+    "space_id": { "$ref": "#/$defs/id" },
+    "workspace_id": { "$ref": "#/$defs/non_empty" },
+    "mode": { "enum": ["shared_profile", "isolated_context", "isolated_profile"] },
+    "owner_task_id": { "type": ["string", "null"] },
+    "owner_run_id": { "type": ["string", "null"] },
+    "created_at": { "$ref": "#/$defs/date_time" },
+    "last_used_at": { "$ref": "#/$defs/date_time" },
+    "status": { "enum": ["creating", "ready", "active", "waiting_resource", "recovering", "orphaned", "closing", "closed", "failed"] },
+    "controlled_tab_ids": { "type": "array", "items": { "$ref": "#/$defs/non_empty" }, "uniqueItems": true },
+    "active_page_id": { "type": ["string", "null"] },
+    "active_flow_id": { "type": ["string", "null"] },
+    "browser_session_id": { "$ref": "#/$defs/non_empty" },
+    "profile_identity_hash": { "$ref": "#/$defs/sha256" },
+    "report_root": { "$ref": "#/$defs/relative_path" },
+    "resource_lease": { "$ref": "#/$defs/resource_lease" },
+    "recovery_notes": { "type": "array", "items": { "$ref": "#/$defs/non_empty" } }
+  },
+  "$defs": {
+    "non_empty": { "type": "string", "minLength": 1 },
+    "id": { "type": "string", "minLength": 1, "maxLength": 80, "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$" },
+    "sha256": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "date_time": { "type": "string", "format": "date-time" },
+    "relative_path": { "type": "string", "minLength": 1, "pattern": "^(?!/)(?!.*\\.\\.)" },
+    "resource_lease": {
+      "type": "object", "additionalProperties": false,
+      "required": ["status", "interactive_profile_slot", "visual_slot", "download_slot"],
+      "properties": {
+        "status": { "enum": ["none", "waiting", "leased"] },
+        "interactive_profile_slot": { "type": "boolean" },
+        "visual_slot": { "type": "boolean" },
+        "download_slot": { "type": "boolean" },
+        "leased_at": { "type": "string", "format": "date-time" },
+        "lease_owner": { "type": "string" }
+      }
+    }
+  }
+}

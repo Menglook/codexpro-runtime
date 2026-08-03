@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codexpro.local/schemas/structured-runtime-event.schema.json",
+  "title": "Structured Runtime Event Envelope v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "event_name",
+    "authority",
+    "source_kind",
+    "goal_id",
+    "task_id",
+    "run_id",
+    "parent_run_id",
+    "component_id",
+    "sequence",
+    "timestamp",
+    "execution_profile_version",
+    "evidence_ref",
+    "terminal",
+    "retry_semantics",
+    "idempotency_key"
+  ],
+  "properties": {
+    "version": { "const": 1 },
+    "event_name": {
+      "enum": [
+        "subagent.created",
+        "subagent.started",
+        "subagent.progress",
+        "subagent.deliverable_reported",
+        "subagent.proof_validated",
+        "subagent.proof_rejected",
+        "subagent.delivery_unknown",
+        "subagent.failed",
+        "subagent.cancelled",
+        "subagent.completed",
+        "tool_started",
+        "tool_completed",
+        "execution.snapshot_loaded",
+        "execution.snapshot_mismatch",
+        "delivery_unknown",
+        "failed",
+        "cancelled",
+        "completed",
+        "external_call_delivery_unknown"
+      ]
+    },
+    "authority": { "type": "string", "minLength": 1 },
+    "source_kind": {
+      "enum": [
+        "goal_event",
+        "component_store",
+        "message_store",
+        "completion_proof",
+        "authorization_audit",
+        "execution_profile_snapshot",
+        "external_call_ledger"
+      ]
+    },
+    "goal_id": { "type": ["string", "null"] },
+    "task_id": { "type": "string", "minLength": 1 },
+    "run_id": { "type": "string", "minLength": 1 },
+    "parent_run_id": { "type": ["string", "null"] },
+    "component_id": { "type": "string", "minLength": 1 },
+    "sequence": { "type": "integer", "minimum": 1 },
+    "timestamp": { "type": "string", "minLength": 1 },
+    "execution_profile_version": { "type": ["integer", "null"], "minimum": 1 },
+    "evidence_ref": { "type": ["string", "null"] },
+    "terminal": { "type": "boolean" },
+    "retry_semantics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy",
+        "replay_allowed",
+        "idempotency_key",
+        "reason",
+        "attempt",
+        "max_attempts"
+      ],
+      "properties": {
+        "policy": { "enum": ["not_applicable", "automatic", "manual", "never"] },
+        "replay_allowed": { "type": "boolean" },
+        "idempotency_key": { "type": ["string", "null"] },
+        "reason": { "type": "string", "minLength": 1 },
+        "attempt": { "type": ["integer", "null"], "minimum": 1 },
+        "max_attempts": { "type": ["integer", "null"], "minimum": 1 }
+      }
+    },
+    "idempotency_key": { "type": "string", "minLength": 1 }
+  }
+}

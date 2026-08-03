@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codexpro.local/schemas/task-outcome-vector.schema.json",
+  "title": "CodexPro Task Outcome Vector",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "execution_status",
+    "validation_status",
+    "delivery_status",
+    "evidence_status",
+    "primary_reason_code",
+    "blocked_capability",
+    "recoverable",
+    "updated_at"
+  ],
+  "properties": {
+    "version": { "const": 1 },
+    "execution_status": { "enum": ["pending", "running", "completed", "failed", "blocked", "cancelled"] },
+    "validation_status": { "enum": ["not_requested", "pending", "passed", "failed", "skipped"] },
+    "delivery_status": { "enum": ["not_requested", "not_ready", "ready", "committed", "push_waiting_security_baseline", "pushed", "failed", "delivery_unknown"] },
+    "evidence_status": { "enum": ["not_required", "pending", "complete", "partial", "unavailable"] },
+    "primary_reason_code": { "type": ["string", "null"] },
+    "blocked_capability": { "type": ["string", "null"] },
+    "recoverable": { "type": "boolean" },
+    "updated_at": { "type": "string", "format": "date-time" }
+  }
+}

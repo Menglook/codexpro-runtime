@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codexpro.local/schemas/authorization-audit-entry.schema.json",
+  "title": "Authorization Audit Entry v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "audit_id",
+    "recorded_at",
+    "phase",
+    "correlation_id",
+    "task_id",
+    "tool",
+    "risk_level",
+    "risk_reason_code",
+    "payload_binding_id",
+    "raw_hash",
+    "normalized_hash",
+    "approved_payload_hash",
+    "executed_payload_hash",
+    "finding_codes",
+    "permission_decision_id",
+    "permission_final_decision",
+    "permission_audit_hash",
+    "permission_sources",
+    "permission_constraints",
+    "permission_reasons",
+    "permission_evidence_refs",
+    "outcome",
+    "duration_ms"
+  ],
+  "properties": {
+    "version": { "const": 1 },
+    "audit_id": { "type": "string", "minLength": 1 },
+    "recorded_at": { "type": "string", "minLength": 1 },
+    "phase": { "enum": ["evaluated", "executing", "completed", "blocked", "failed"] },
+    "correlation_id": { "type": "string", "minLength": 1 },
+    "task_id": { "type": ["string", "null"] },
+    "tool": { "type": "string", "minLength": 1 },
+    "risk_level": { "type": "string", "minLength": 1 },
+    "risk_reason_code": { "type": "string", "minLength": 1 },
+    "payload_binding_id": { "type": "string", "minLength": 1 },
+    "raw_hash": { "type": "string", "minLength": 1 },
+    "normalized_hash": { "type": "string", "minLength": 1 },
+    "approved_payload_hash": { "type": "string", "minLength": 1 },
+    "executed_payload_hash": { "type": ["string", "null"] },
+    "finding_codes": { "type": "array", "items": { "type": "string" } },
+    "permission_decision_id": { "type": "string", "minLength": 1 },
+    "permission_final_decision": { "enum": ["allow", "constrained", "sandbox", "ask", "deny"] },
+    "permission_audit_hash": { "type": "string", "minLength": 1 },
+    "permission_sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["source", "decision"],
+        "properties": {
+          "source": { "type": "string", "minLength": 1 },
+          "decision": { "enum": ["allow", "constrained", "sandbox", "ask", "deny"] }
+        }
+      }
+    },
+    "permission_constraints": { "type": "array", "items": { "type": "string" } },
+    "permission_reasons": { "type": "array", "items": { "type": "string" } },
+    "permission_evidence_refs": { "type": "array", "items": { "type": "string" } },
+    "outcome": { "enum": ["pending", "ok", "blocked", "error"] },
+    "duration_ms": { "type": ["integer", "null"], "minimum": 0 },
+    "structured_runtime_event": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": [
+        "version",
+        "event_name",
+        "authority",
+        "source_kind",
+        "goal_id",
+        "task_id",
+        "run_id",
+        "parent_run_id",
+        "component_id",
+        "sequence",
+        "timestamp",
+        "execution_profile_version",
+        "evidence_ref",
+        "terminal",
+        "retry_semantics",
+        "idempotency_key"
+      ],
+      "properties": {
+        "version": { "const": 1 },
+        "event_name": { "enum": ["tool_started", "tool_completed"] },
+        "authority": { "const": "authorization_audit" },
+        "source_kind": { "const": "authorization_audit" },
+        "goal_id": { "type": ["string", "null"] },
+        "task_id": { "type": "string", "minLength": 1 },
+        "run_id": { "type": "string", "minLength": 1 },
+        "parent_run_id": { "type": ["string", "null"] },
+        "component_id": { "type": "string", "minLength": 1 },
+        "sequence": { "type": "integer", "minimum": 1 },
+        "timestamp": { "type": "string", "minLength": 1 },
+        "execution_profile_version": { "type": ["integer", "null"], "minimum": 1 },
+        "evidence_ref": { "type": ["string", "null"] },
+        "terminal": { "type": "boolean" },
+        "retry_semantics": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["policy", "replay_allowed", "idempotency_key", "reason", "attempt", "max_attempts"],
+          "properties": {
+            "policy": { "enum": ["not_applicable", "automatic", "manual", "never"] },
+            "replay_allowed": { "type": "boolean" },
+            "idempotency_key": { "type": ["string", "null"] },
+            "reason": { "type": "string", "minLength": 1 },
+            "attempt": { "type": ["integer", "null"], "minimum": 1 },
+            "max_attempts": { "type": ["integer", "null"], "minimum": 1 }
+          }
+        },
+        "idempotency_key": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

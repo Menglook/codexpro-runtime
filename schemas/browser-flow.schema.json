@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codexpro.local/schemas/browser-flow.schema.json",
+  "title": "CodexPro Browser Flow Contract v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "flow_id", "contract_hash", "task_id", "run_id", "task_contract_hash", "space_id", "platform", "risk_class", "steps", "success_criteria", "permanently_blocked_actions", "created_at"],
+  "properties": {
+    "version": { "const": 1 },
+    "flow_id": { "$ref": "#/$defs/non_empty" },
+    "contract_hash": { "$ref": "#/$defs/sha256" },
+    "task_id": { "$ref": "#/$defs/non_empty" },
+    "run_id": { "$ref": "#/$defs/non_empty" },
+    "task_contract_hash": { "$ref": "#/$defs/sha256" },
+    "space_id": { "$ref": "#/$defs/non_empty", "default": "default" },
+    "platform": { "$ref": "#/$defs/non_empty" },
+    "risk_class": { "enum": ["R0", "R1", "R2", "R3", "R4"] },
+    "skill_ref": { "$ref": "#/$defs/non_empty" },
+    "steps": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/step" } },
+    "success_criteria": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/non_empty" } },
+    "permanently_blocked_actions": {
+      "type": "array", "minItems": 1, "uniqueItems": true,
+      "items": { "enum": ["payment", "recharge", "checkout", "submit_order", "confirm_fulfillment", "cancel_order", "refund", "resend", "change_price", "change_inventory", "change_ad_budget", "change_campaign_state", "delete", "clear", "publish", "send_message", "send_email", "send_support_reply", "change_password", "change_account", "change_production_configuration"] }
+    },
+    "created_at": { "type": "string", "format": "date-time" }
+  },
+  "$defs": {
+    "non_empty": { "type": "string", "minLength": 1 },
+    "sha256": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "condition": {
+      "type": "object", "additionalProperties": false, "required": ["fact_ref", "operator"],
+      "properties": {
+        "fact_ref": { "$ref": "#/$defs/non_empty" },
+        "operator": { "enum": ["text_contains", "url_matches", "element_exists", "element_hidden", "equals", "step_status"] },
+        "expected": {},
+        "verified": { "const": true }
+      }
+    },
+    "branch_case": {
+      "type": "object", "additionalProperties": false, "required": ["condition", "next_step_id"],
+      "properties": { "condition": { "$ref": "#/$defs/condition" }, "next_step_id": { "$ref": "#/$defs/non_empty" } }
+    },
+    "step": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "type", "description", "depends_on", "preconditions", "allowed_actions", "recoverable", "retryable", "input"],
+      "properties": {
+        "id": { "$ref": "#/$defs/non_empty" },
+        "type": { "enum": ["open", "observe", "observe_continue", "assert", "click", "input", "select", "check", "scroll", "wait", "extract_table", "extract_facts", "download", "visual_observe", "branch", "repeat_bounded", "handoff", "report"] },
+        "description": { "$ref": "#/$defs/non_empty" },
+        "depends_on": { "type": "array", "items": { "$ref": "#/$defs/non_empty" }, "uniqueItems": true },
+        "preconditions": { "type": "array", "items": { "$ref": "#/$defs/condition" } },
+        "allowed_actions": { "type": "array", "items": { "$ref": "#/$defs/non_empty" }, "uniqueItems": true },
+        "recoverable": { "type": "boolean" },
+        "retryable": { "type": "boolean" },
+        "input": { "type": "object", "additionalProperties": true },
+        "branch_cases": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/branch_case" } },
+        "repeat": {
+          "type": "object", "additionalProperties": false, "required": ["body_step_ids", "max_iterations", "progress_fact_ref"],
+          "properties": {
+            "body_step_ids": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/non_empty" } },
+            "max_iterations": { "type": "integer", "minimum": 1, "maximum": 20 },
+            "progress_fact_ref": { "$ref": "#/$defs/non_empty" }
+          }
+        }
+      },
+      "allOf": [
+        { "if": { "properties": { "type": { "const": "branch" } }, "required": ["type"] }, "then": { "required": ["branch_cases"] } },
+        { "if": { "properties": { "type": { "const": "repeat_bounded" } }, "required": ["type"] }, "then": { "required": ["repeat"] } },
+        { "if": { "properties": { "type": { "enum": ["click", "input", "select", "check", "download"] } }, "required": ["type"] }, "then": { "properties": { "retryable": { "const": false } } } }
+      ]
+    }
+  }
+}

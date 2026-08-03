@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "id": "generic.safe-recovery",
+  "page_not_ready": "wait_once",
+  "login_expired": "stop_human_login",
+  "fingerprint_mismatch": "readonly_fallback",
+  "shop_context_mismatch": "stop",
+  "business_object_mismatch": "stop",
+  "missing_element": "reobserve_once",
+  "network_error": "record_and_stop",
+  "final_business_action_failure": "never_retry"
+}

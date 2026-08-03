@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codexpro.local/schemas/browser-tab-ownership.schema.json",
+  "title": "CodexPro Browser Tab Ownership v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "tab_id", "space_id", "created_by_codexpro", "ownership", "url", "title", "last_seen_at", "transfer_state"],
+  "properties": {
+    "version": { "const": 1 },
+    "tab_id": { "$ref": "#/$defs/non_empty" },
+    "space_id": { "$ref": "#/$defs/non_empty" },
+    "created_by_codexpro": { "type": "boolean" },
+    "ownership": { "enum": ["owned", "external", "adopted", "orphaned"] },
+    "url": { "type": "string" },
+    "title": { "type": "string" },
+    "last_seen_at": { "type": "string", "format": "date-time" },
+    "transfer_state": { "enum": ["none", "pending", "completed", "rejected"] },
+    "transferred_from_space_id": { "type": "string" },
+    "adoption_evidence_ref": { "type": "string" },
+    "close_with_space": { "type": "boolean" }
+  },
+  "allOf": [
+    { "if": { "properties": { "ownership": { "const": "external" } }, "required": ["ownership"] }, "then": { "properties": { "close_with_space": { "const": false } } } },
+    { "if": { "properties": { "ownership": { "const": "owned" } }, "required": ["ownership"] }, "then": { "properties": { "close_with_space": { "const": true } } } }
+  ],
+  "$defs": { "non_empty": { "type": "string", "minLength": 1 } }
+}

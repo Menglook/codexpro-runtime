@@ -1,0 +1,205 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codexpro.local/schemas/platform-skill.schema.json",
+  "title": "CodexPro Platform Skill v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "id", "platform", "intent", "risk_class", "entry_fingerprints", "required_context", "locate_strategies", "steps", "assertions", "handoff", "recovery", "outputs"],
+  "properties": {
+    "version": { "const": 1 },
+    "id": { "type": "string", "minLength": 1 },
+    "platform": { "type": "string", "minLength": 1 },
+    "intent": { "type": "string", "minLength": 1 },
+    "risk_class": { "enum": ["R0", "R1", "R2", "R3", "R4"] },
+    "entry_fingerprints": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["type", "value"],
+        "properties": {
+          "type": { "enum": ["url_contains", "hostname_contains", "title_contains", "text_contains", "element_text_contains", "accessible_name_contains"] },
+          "value": { "type": "string", "minLength": 1 },
+          "required": { "type": "boolean" }
+        }
+      }
+    },
+    "required_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["platform", "shop_context_required"],
+      "properties": {
+        "platform": { "type": "string", "minLength": 1 },
+        "shop_context_required": { "type": "boolean" },
+        "shop_context_visible_required": { "type": "boolean" },
+        "business_object_type": { "type": "string", "minLength": 1 },
+        "business_object_visible_required": { "type": "boolean" }
+      }
+    },
+    "locate_strategies": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["order", "method", "description"],
+        "properties": {
+          "order": { "type": "integer", "minimum": 1 },
+          "method": {
+            "enum": [
+              "business_semantic_accessible_name",
+              "stable_element_ref",
+              "role_name",
+              "stable_selector",
+              "local_visual_confirmation"
+            ]
+          },
+          "description": { "type": "string", "minLength": 1 },
+          "target": { "type": "string", "minLength": 1 },
+          "selector": { "type": "string", "minLength": 1 },
+          "ref_hint": { "type": "string", "minLength": 1 },
+          "role": { "type": "string", "minLength": 1 },
+          "name": { "type": "string", "minLength": 1 },
+          "visual_prompt": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "action", "description"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "action": {
+            "enum": ["observe", "navigate", "filter", "expand", "download", "prepare_draft", "assert", "record", "report", "handoff"]
+          },
+          "description": { "type": "string", "minLength": 1 },
+          "target": { "type": "string", "minLength": 1 },
+          "selector": { "type": "string", "minLength": 1 },
+          "expected": { "type": "string", "minLength": 1 },
+          "readonly": { "type": "boolean" },
+          "auto_retry": { "type": "boolean" }
+        }
+      }
+    },
+    "assertions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "description"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "description": { "type": "string", "minLength": 1 },
+          "fact_key": { "type": "string", "minLength": 1 },
+          "text_contains": { "type": "string", "minLength": 1 },
+          "required": { "type": "boolean" }
+        }
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "match_any", "reason", "human_steps"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "severity": { "enum": ["info", "warning", "critical"] },
+          "fact_keys": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+          "match_any": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+          "reason": { "type": "string", "minLength": 1 },
+          "human_steps": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } }
+        }
+      }
+    },
+    "handoff": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required", "trigger_conditions"],
+      "properties": {
+        "required": { "type": "boolean" },
+        "trigger_conditions": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "human_final_action": { "type": "string", "minLength": 1 },
+        "action_package": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["recommended_action", "reason", "current_page_area", "steps", "human_final_action", "expected_result", "risk_warnings", "post_action_verification"],
+          "properties": {
+            "when_diagnosis_ids": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+            "unless_diagnosis_ids": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+            "recommended_action": { "type": "string", "minLength": 1 },
+            "reason": { "type": "string", "minLength": 1 },
+            "current_page_area": { "type": "string", "minLength": 1 },
+            "steps": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["instruction", "human_required"],
+                "properties": {
+                  "instruction": { "type": "string", "minLength": 1 },
+                  "action": { "type": "string", "minLength": 1 },
+                  "human_required": { "type": "boolean" }
+                }
+              }
+            },
+            "human_final_action": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["label", "must_be_performed_by", "requires_confirmation"],
+              "properties": {
+                "label": { "type": "string", "minLength": 1 },
+                "must_be_performed_by": { "const": "human" },
+                "requires_confirmation": { "type": "boolean" },
+                "irreversible": { "type": "boolean" }
+              }
+            },
+            "expected_result": { "type": "string", "minLength": 1 },
+            "risk_warnings": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+            "post_action_verification": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } }
+          }
+        }
+      }
+    },
+    "recovery": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["on_fingerprint_mismatch", "on_context_mismatch"],
+      "properties": {
+        "on_fingerprint_mismatch": { "const": "stop" },
+        "on_context_mismatch": { "const": "stop" },
+        "auto_retry": { "const": false }
+      }
+    },
+    "outputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["facts", "evidence", "customer_questions"],
+      "properties": {
+        "facts": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["key", "label"],
+            "properties": {
+              "key": { "type": "string", "minLength": 1 },
+              "label": { "type": "string", "minLength": 1 },
+              "required": { "type": "boolean" },
+              "patterns": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+            }
+          }
+        },
+        "evidence": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "customer_questions": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+      }
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codexpro.local/schemas/browser-flow-result.schema.json",
+  "title": "CodexPro Browser Flow Result v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "flow_id", "contract_hash", "task_id", "run_id", "space_id", "status", "facts", "completed_step_ids", "unresolved_step_ids", "evidence_paths", "completed_at"],
+  "properties": {
+    "version": { "const": 1 },
+    "flow_id": { "$ref": "#/$defs/non_empty" },
+    "contract_hash": { "$ref": "#/$defs/sha256" },
+    "task_id": { "$ref": "#/$defs/non_empty" },
+    "run_id": { "$ref": "#/$defs/non_empty" },
+    "space_id": { "$ref": "#/$defs/non_empty" },
+    "status": { "enum": ["passed", "failed", "blocked", "waiting_human", "cancelled"] },
+    "facts": { "type": "array", "items": { "$ref": "#/$defs/fact" } },
+    "completed_step_ids": { "type": "array", "items": { "$ref": "#/$defs/non_empty" }, "uniqueItems": true },
+    "unresolved_step_ids": { "type": "array", "items": { "$ref": "#/$defs/non_empty" }, "uniqueItems": true },
+    "completion_proof": { "type": "object", "additionalProperties": true },
+    "human_action_package": { "type": "object", "additionalProperties": true },
+    "report_path": { "$ref": "#/$defs/relative_path" },
+    "evidence_paths": { "type": "array", "items": { "$ref": "#/$defs/relative_path" } },
+    "limitations": { "type": "array", "items": { "$ref": "#/$defs/non_empty" } },
+    "completed_at": { "type": "string", "format": "date-time" }
+  },
+  "$defs": {
+    "non_empty": { "type": "string", "minLength": 1 },
+    "sha256": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "relative_path": { "type": "string", "minLength": 1, "pattern": "^(?!/)(?!.*\\.\\.)" },
+    "fact": {
+      "type": "object", "additionalProperties": false, "required": ["key", "value", "evidence_refs", "confidence"],
+      "properties": {
+        "key": { "$ref": "#/$defs/non_empty" }, "value": {},
+        "evidence_refs": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/non_empty" } },
+        "confidence": { "enum": ["high", "medium", "low", "unknown"] }
+      }
+    }
+  }
+}

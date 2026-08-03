@@ -1,0 +1,8 @@
+export const OFFICE_SCENE_EFFECT_STYLES = String.raw`
+    .office-actor::before{content:"";position:absolute;left:50%;bottom:22px;width:68px;height:20px;transform:translateX(-50%) rotateX(68deg);border:1px solid color-mix(in srgb,var(--agent-core,#35d7ff) 65%,transparent);border-radius:50%;opacity:.36;box-shadow:0 0 16px color-mix(in srgb,var(--agent-core,#35d7ff) 30%,transparent);pointer-events:none}.office-actor[aria-pressed="true"]::before{opacity:1;border-width:2px}.office-actor[aria-pressed="true"] .actor-svg{filter:drop-shadow(0 0 8px color-mix(in srgb,var(--agent-core,#35d7ff) 60%,transparent))}
+    .scene-route-layer{opacity:.13;transition:opacity .18s ease}.office-scene-shell.route-visible .scene-route-layer,.office-scene-shell.moving .scene-route-layer{opacity:.7}.scene-route-layer line{stroke:rgba(52,216,255,.35)!important;stroke-width:5!important;stroke-dasharray:2 16!important;filter:drop-shadow(0 0 4px rgba(52,216,255,.5))}
+    .scene-device[data-state="active"]{border-color:var(--scene-cyan);box-shadow:0 0 16px rgba(52,216,255,.26),inset 0 0 12px rgba(52,216,255,.12)}.scene-device.acceptance[data-state="active"]{border-color:var(--scene-green);box-shadow:0 0 16px rgba(100,242,180,.26)}.scene-device.writer[data-state="active"]{border-color:var(--scene-orange);box-shadow:0 0 16px rgba(255,173,66,.28)}
+    @keyframes sceneCorePulse{0%,100%{opacity:.72;filter:brightness(1)}50%{opacity:1;filter:brightness(1.35)}}
+    @keyframes sceneRouteFlow{to{stroke-dashoffset:-36}}
+    .office-actor[data-pose="standing"] .agent-core{animation:sceneCorePulse 2.2s ease-in-out var(--agent-delay,0ms) infinite}.office-scene-shell.moving .scene-route-layer line{animation:sceneRouteFlow .9s linear infinite}
+`;

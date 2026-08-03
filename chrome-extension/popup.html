@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>CodexPro Browser Bridge</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <main>
+    <h1>CodexPro Browser Bridge</h1>
+    <p id="page" class="muted">正在读取当前标签页…</p>
+    <div id="state" class="state">无需授权 · 可选手动绑定</div>
+    <label>
+      本机 Bridge 地址
+      <input id="bridge-url" type="url" value="http://127.0.0.1:8787" spellcheck="false">
+    </label>
+    <div class="actions">
+      <button id="authorize" type="button">可选：绑定当前标签页</button>
+      <button id="release" type="button" class="secondary">断开并取消信任</button>
+    </div>
+    <p id="message" role="status"></p>
+    <p class="notice">CodexPro 默认直接创建和控制专用 Chrome 中由它打开的标签页，不需要点击本插件。只有需要接管一个已经打开的标签页时，才使用上方可选绑定。插件不读取 Cookie、密码、Token 或浏览器存储。</p>
+  </main>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+name: example-project
+kind: node
+profile_version: 1
+description: Human-editable CodexPro project profile.
+package_manager: npm
+primary_language: TypeScript/JavaScript
+frameworks:
+  - TypeScript
+adapters:
+  - node
+important_paths:
+  - src
+  - scripts
+  - package.json
+blocked_paths:
+  - .git
+  - node_modules
+  - dist
+  - build
+  - .next
+  - coverage
+  - .cache
+  - mysql
+  - mysql-data
+  - db_data
+risk_paths:
+  - .env
+  - .env.*
+  - docker-compose.yml
+entrypoints: []
+env_files: []
+docker_services: []
+rules:
+  - Read the task preflight rule summary before starting implementation.
+  - Keep durable project rules in .codexpro/project.yml or .codexpro/memory/rules.md, not in transient handoff files.
+commands:
+  start: []
+  build: []
+  test: []
+  lint: []
+paths:
+  frontend: []
+  backend: []
+  docs: []
+  reports: []
+browser:
+  base_url: ""
+  smoke_urls: []
+  # Optional visual regression pairs used by npm run browser-visual-regression.
+  visual_pairs: []
+  # visual_threshold_ratio is the allowed mismatched pixel ratio before failure.
+  visual_threshold_ratio: 0.001
+  # visual_pixel_delta_threshold ignores tiny per-channel pixel changes.
+  visual_pixel_delta_threshold: 0
+  # Empty allows all http/https hostnames subject to network safety checks.
+  # A non-empty list is a strict hostname allowlist; *.example.com also permits the root domain.
+  # Example: ["localhost", "127.0.0.1", "*.example.com"]
+  allowed_domains: []
+context:
+  # Task-level context budget for read_many_files, search_project, run_task/run_stage, and export_pro_context.
+  max_files_per_task: 16
+  max_lines_per_file: 240
+  max_total_chars: 180000
+review:
+  # advisory keeps findings informational; gated blocks configured findings; independent uses an isolated review context.
+  mode: advisory
+  block_on:
+    P0: 0.5
+    P1: 0.7
+    P2: null
+  require_critical_scope_covered: true
+  # independent_provider: codex-sdk
+business_rules: []
+notes:
+  - Keep project-specific rules here. Do not store real secret values.

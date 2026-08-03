@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codexpro.local/schemas/browser-navigation-map.schema.json",
+  "title": "CodexPro Browser Navigation Map v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "id", "platform", "nodes", "routes", "failure_rules"],
+  "properties": {
+    "version": { "const": 1 },
+    "id": { "$ref": "#/$defs/non_empty" },
+    "platform": { "$ref": "#/$defs/non_empty" },
+    "nodes": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/node" } },
+    "routes": { "type": "array", "items": { "$ref": "#/$defs/route" } },
+    "failure_rules": {
+      "type": "object", "additionalProperties": false,
+      "required": ["login_expired", "permission_denied", "fingerprint_mismatch", "context_mismatch"],
+      "properties": {
+        "login_expired": { "const": "stop_human_login" },
+        "permission_denied": { "const": "stop" },
+        "fingerprint_mismatch": { "enum": ["readonly_fallback", "stop"] },
+        "context_mismatch": { "const": "stop" }
+      }
+    }
+  },
+  "$defs": {
+    "non_empty": { "type": "string", "minLength": 1 },
+    "node": {
+      "type": "object", "additionalProperties": false, "required": ["id", "fingerprint_ref"],
+      "properties": { "id": { "$ref": "#/$defs/non_empty" }, "fingerprint_ref": { "$ref": "#/$defs/non_empty" } }
+    },
+    "route": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "from", "to", "steps", "success_checks", "return_steps"],
+      "properties": {
+        "id": { "$ref": "#/$defs/non_empty" },
+        "from": { "$ref": "#/$defs/non_empty" },
+        "to": { "$ref": "#/$defs/non_empty" },
+        "steps": { "type": "array", "items": { "$ref": "#/$defs/navigation_step" } },
+        "success_checks": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/non_empty" } },
+        "return_steps": { "type": "array", "items": { "$ref": "#/$defs/navigation_step" } }
+      }
+    },
+    "navigation_step": {
+      "type": "object", "additionalProperties": false, "required": ["action", "target", "risk_class"],
+      "properties": {
+        "action": { "enum": ["open", "click", "select", "wait", "observe", "assert"] },
+        "target": { "$ref": "#/$defs/non_empty" },
+        "risk_class": { "enum": ["R0", "R1"] }
+      }
+    }
+  }
+}

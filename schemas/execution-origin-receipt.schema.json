@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codexpro.local/schemas/execution-origin-receipt.schema.json",
+  "title": "CodexPro Execution Origin Receipt v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "intelligence_origin",
+    "execution_origin",
+    "local_codex_process_started",
+    "codex_thread_created",
+    "api_key_used",
+    "external_model_invocation",
+    "codex_quota_risk",
+    "evidence_basis"
+  ],
+  "properties": {
+    "version": { "const": 1 },
+    "intelligence_origin": {
+      "enum": ["chatgpt_connector", "codex_cli", "codex_sdk", "openai_api", "local_model", "none"]
+    },
+    "execution_origin": {
+      "enum": ["codexpro_local", "codex_cli", "codex_sdk", "test_mock"]
+    },
+    "local_codex_process_started": { "type": "boolean" },
+    "codex_thread_created": { "type": ["boolean", "null"] },
+    "api_key_used": { "type": ["boolean", "null"] },
+    "external_model_invocation": { "type": "boolean" },
+    "codex_quota_risk": { "type": "boolean" },
+    "evidence_basis": {
+      "enum": ["local_tool_contract", "configured_provider_and_tool_contract"]
+    }
+  }
+}

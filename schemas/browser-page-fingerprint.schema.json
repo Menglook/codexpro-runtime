@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codexpro.local/schemas/browser-page-fingerprint.schema.json",
+  "title": "CodexPro Browser Page Fingerprint v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "id", "platform", "page", "signals", "minimum_required_matches", "on_mismatch"],
+  "properties": {
+    "version": { "const": 1 },
+    "id": { "$ref": "#/$defs/non_empty" },
+    "platform": { "$ref": "#/$defs/non_empty" },
+    "page": { "$ref": "#/$defs/non_empty" },
+    "layout_version_hint": { "type": "string" },
+    "signals": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/signal" } },
+    "minimum_required_matches": { "type": "integer", "minimum": 1 },
+    "on_mismatch": { "enum": ["warning_readonly", "quarantine"] },
+    "verified_at": { "type": ["string", "null"], "format": "date-time" }
+  },
+  "$defs": {
+    "non_empty": { "type": "string", "minLength": 1 },
+    "signal": {
+      "type": "object", "additionalProperties": false, "required": ["type", "value", "required"],
+      "properties": {
+        "type": { "enum": ["hostname", "url_path", "title", "navigation_item", "accessible_name", "text_present", "text_absent", "layout_feature"] },
+        "value": { "$ref": "#/$defs/non_empty" },
+        "match": { "enum": ["exact", "contains", "pattern"] },
+        "required": { "type": "boolean" }
+      }
+    }
+  }
+}

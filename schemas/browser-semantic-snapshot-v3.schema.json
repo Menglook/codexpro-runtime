@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codexpro.local/schemas/browser-semantic-snapshot-v3.schema.json",
+  "title": "CodexPro Browser Semantic Snapshot v3",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "snapshot_id", "session_id", "space_id", "page_id", "page_revision", "document_version", "url", "title", "scope", "source", "created_at", "redacted", "content", "frames", "elements", "pagination", "completeness", "evidence_path"],
+  "properties": {
+    "version": { "const": 3 },
+    "snapshot_id": { "$ref": "#/$defs/non_empty" },
+    "session_id": { "$ref": "#/$defs/non_empty" },
+    "space_id": { "$ref": "#/$defs/non_empty", "default": "default" },
+    "page_id": { "$ref": "#/$defs/non_empty" },
+    "page_revision": { "$ref": "#/$defs/non_empty" },
+    "document_version": { "$ref": "#/$defs/non_empty" },
+    "url": { "type": "string", "format": "uri" },
+    "title": { "type": "string" },
+    "scope": { "enum": ["viewport", "document", "selector", "region", "frame"] },
+    "source": { "enum": ["playwright", "native_cdp"] },
+    "created_at": { "$ref": "#/$defs/date_time" },
+    "redacted": { "const": true },
+    "content": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text", "headings", "landmarks"],
+      "properties": {
+        "text": { "type": "string" },
+        "headings": { "type": "array", "items": { "$ref": "#/$defs/non_empty" } },
+        "landmarks": { "type": "array", "items": { "$ref": "#/$defs/non_empty" } }
+      }
+    },
+    "frames": { "type": "array", "items": { "$ref": "#/$defs/frame" } },
+    "elements": { "type": "array", "items": { "$ref": "#/$defs/element" } },
+    "virtual_collections": { "type": "array", "items": { "$ref": "#/$defs/virtual_collection" } },
+    "pagination": { "$ref": "#/$defs/pagination" },
+    "completeness": { "enum": ["complete", "partial", "sampled", "unknown"] },
+    "limitations": { "type": "array", "items": { "$ref": "#/$defs/non_empty" } },
+    "evidence_path": { "$ref": "#/$defs/relative_path" }
+  },
+  "$defs": {
+    "non_empty": { "type": "string", "minLength": 1 },
+    "date_time": { "type": "string", "format": "date-time" },
+    "relative_path": { "type": "string", "minLength": 1, "pattern": "^(?!/)(?!.*\\.\\.)" },
+    "sha256": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "frame": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["frame_id", "parent_frame_id", "origin", "same_origin", "shadow_root", "readable"],
+      "properties": {
+        "frame_id": { "$ref": "#/$defs/non_empty" },
+        "parent_frame_id": { "type": ["string", "null"] },
+        "origin": { "$ref": "#/$defs/non_empty" },
+        "same_origin": { "type": "boolean" },
+        "shadow_root": { "enum": ["none", "open", "closed"] },
+        "readable": { "type": "boolean" },
+        "visible_bounds": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["x", "y", "width", "height"],
+          "properties": {
+            "x": { "type": "number" }, "y": { "type": "number" },
+            "width": { "type": "number", "minimum": 0 }, "height": { "type": "number", "minimum": 0 }
+          }
+        }
+      }
+    },
+    "element": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ref", "identity_signature", "frame_id", "role", "accessible_name", "source", "actionable", "page_revision"],
+      "properties": {
+        "ref": { "type": "string", "pattern": "^[er][1-9][0-9]*$" },
+        "identity_signature": { "$ref": "#/$defs/sha256" },
+        "frame_id": { "$ref": "#/$defs/non_empty" },
+        "role": { "type": "string" },
+        "accessible_name": { "type": "string" },
+        "text": { "type": "string" },
+        "source": { "enum": ["playwright", "native_cdp"] },
+        "actionable": { "type": "boolean" },
+        "page_revision": { "$ref": "#/$defs/non_empty" },
+        "context": { "type": "string" },
+        "states": { "type": "array", "items": { "$ref": "#/$defs/non_empty" } }
+      },
+      "allOf": [
+        { "if": { "properties": { "source": { "const": "native_cdp" } }, "required": ["source"] }, "then": { "properties": { "ref": { "pattern": "^r[1-9][0-9]*$" }, "actionable": { "const": false } } } },
+        { "if": { "properties": { "source": { "const": "playwright" } }, "required": ["source"] }, "then": { "properties": { "ref": { "pattern": "^e[1-9][0-9]*$" } } } }
+      ]
+    },
+    "virtual_collection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ref", "kind", "loaded_start", "loaded_end", "sampled", "possible_more"],
+      "properties": {
+        "ref": { "$ref": "#/$defs/non_empty" },
+        "kind": { "enum": ["virtual_list", "dynamic_table"] },
+        "loaded_start": { "type": "integer", "minimum": 0 },
+        "loaded_end": { "type": "integer", "minimum": 0 },
+        "estimated_total": { "type": "integer", "minimum": 0 },
+        "sampled": { "type": "boolean" },
+        "possible_more": { "type": "boolean" }
+      }
+    },
+    "pagination": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["has_more", "next_cursor", "chunk_index", "cursor_binding"],
+      "properties": {
+        "has_more": { "type": "boolean" },
+        "next_cursor": { "type": ["string", "null"] },
+        "chunk_index": { "type": "integer", "minimum": 0 },
+        "cursor_binding": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["session_id", "space_id", "page_id", "url", "document_version"],
+          "properties": {
+            "session_id": { "$ref": "#/$defs/non_empty" },
+            "space_id": { "$ref": "#/$defs/non_empty" },
+            "page_id": { "$ref": "#/$defs/non_empty" },
+            "url": { "type": "string", "format": "uri" },
+            "document_version": { "$ref": "#/$defs/non_empty" }
+          }
+        }
+      }
+    }
+  }
+}

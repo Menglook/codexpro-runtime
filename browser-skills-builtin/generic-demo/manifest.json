@@ -1,0 +1,40 @@
+{
+  "version": 2,
+  "pack_id": "generic.demo",
+  "platform": "generic",
+  "pack_version": "2.0.0",
+  "platform_version_hint": "generic-demo-v1",
+  "layer": "builtin",
+  "compatible_runtime": "codexpro-browser-skill-pack-runtime@2",
+  "status": "active",
+  "skill_contract_hash": "sha256:f2fcc6284d8339bbfdecba706bbd5abf135c62b86ab5c08069660b406cc2f6ae",
+  "verified_at": null,
+  "verified_pages": [
+    "generic.demo-page"
+  ],
+  "resources": {
+    "pages": [
+      "pages/page.json"
+    ],
+    "navigation": [],
+    "extractors": [
+      "extractors/summary.json"
+    ],
+    "workflows": [
+      "workflows/generic.readonly.page_summary.json"
+    ],
+    "recovery": [
+      "recovery/safe.json"
+    ],
+    "fixtures": [
+      "fixtures/redacted-snapshots/generic.readonly.page_summary.json"
+    ]
+  },
+  "promotion_policy": {
+    "automatic_long_term_write": false,
+    "requires_redaction_scan": true,
+    "requires_duplicate_check": true,
+    "requires_targeted_regression": true,
+    "requires_explicit_user_approval": true
+  }
+}

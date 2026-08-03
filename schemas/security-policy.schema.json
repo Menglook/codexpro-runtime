@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codexpro.local/schemas/security-policy.schema.json",
+  "title": "CodexPro Security Policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "schema_version",
+    "policy_id",
+    "policy_version",
+    "updated_at",
+    "baseline"
+  ],
+  "properties": {
+    "kind": { "const": "codexpro_security_policy" },
+    "schema_version": { "const": 1 },
+    "policy_id": { "type": "string", "minLength": 1 },
+    "policy_version": { "type": "string", "minLength": 1 },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "baseline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "default_path",
+        "allowed_dispositions",
+        "forbidden_rules",
+        "accepted_risk_requires_expiry",
+        "proposal_requires_manual_approval"
+      ],
+      "properties": {
+        "default_path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+        },
+        "allowed_dispositions": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "enum": ["false_positive", "accepted_risk"] }
+        },
+        "forbidden_rules": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "accepted_risk_requires_expiry": { "const": true },
+        "proposal_requires_manual_approval": { "const": true }
+      }
+    }
+  }
+}

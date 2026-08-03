@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codexpro.local/schemas/message-ack.schema.json",
+  "title": "CodexPro Message ACK v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "ack_id", "message_id", "message_type", "consumer", "dedupe_key", "received_at", "applied_at", "outcome", "resulting_state_version", "resulting_state_hash"],
+  "properties": {
+    "version": { "const": 1 },
+    "ack_id": { "type": "string", "minLength": 1 },
+    "message_id": { "type": "string", "minLength": 1 },
+    "message_type": { "type": "string", "minLength": 1 },
+    "consumer": { "type": "string", "minLength": 1 },
+    "dedupe_key": { "type": "string", "minLength": 1 },
+    "received_at": { "type": "string", "minLength": 1 },
+    "applied_at": { "type": "string", "minLength": 1 },
+    "outcome": { "enum": ["applied", "duplicate", "rejected"] },
+    "resulting_state_version": { "type": ["integer", "null"], "minimum": 0 },
+    "resulting_state_hash": { "type": ["string", "null"] }
+  }
+}

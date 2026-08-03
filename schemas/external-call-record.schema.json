@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codexpro.local/schemas/external-call-record.schema.json",
+  "title": "External Call Record V1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "call_id",
+    "domain",
+    "operation",
+    "request_fingerprint",
+    "idempotency",
+    "idempotency_key",
+    "delivery_state",
+    "connection_state",
+    "attempt",
+    "max_attempts",
+    "revision",
+    "created_at",
+    "updated_at",
+    "sent_at",
+    "acknowledged_at",
+    "executing_at",
+    "completed_at",
+    "failed_at",
+    "delivery_unknown_at",
+    "result_ref",
+    "domain_fact_ref",
+    "failure",
+    "delivery_unknown_reason",
+    "metadata"
+  ],
+  "properties": {
+    "version": { "const": 1 },
+    "call_id": { "type": "string", "minLength": 1 },
+    "domain": { "type": "string", "minLength": 1 },
+    "operation": { "type": "string", "minLength": 1 },
+    "request_fingerprint": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "idempotency": { "enum": ["idempotent", "non_idempotent", "unknown"] },
+    "idempotency_key": { "type": ["string", "null"], "minLength": 1 },
+    "delivery_state": { "enum": ["not_sent", "sending", "acknowledged", "executing", "completed", "failed", "delivery_unknown"] },
+    "connection_state": { "enum": ["connected", "idle", "transport_interrupted", "server_restarting", "waking", "reconnecting", "capability_renegotiating", "ready", "unavailable"] },
+    "attempt": { "type": "integer", "minimum": 1 },
+    "max_attempts": { "type": ["integer", "null"], "minimum": 1 },
+    "revision": { "type": "integer", "minimum": 1 },
+    "created_at": { "type": "string", "format": "date-time" },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "sent_at": { "type": ["string", "null"], "format": "date-time" },
+    "acknowledged_at": { "type": ["string", "null"], "format": "date-time" },
+    "executing_at": { "type": ["string", "null"], "format": "date-time" },
+    "completed_at": { "type": ["string", "null"], "format": "date-time" },
+    "failed_at": { "type": ["string", "null"], "format": "date-time" },
+    "delivery_unknown_at": { "type": ["string", "null"], "format": "date-time" },
+    "result_ref": { "type": ["string", "null"] },
+    "domain_fact_ref": { "type": ["string", "null"] },
+    "failure": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["code", "message", "retryable"],
+          "properties": {
+            "code": { "type": "string", "minLength": 1 },
+            "message": { "type": "string", "minLength": 1 },
+            "retryable": { "type": "boolean" }
+          }
+        }
+      ]
+    },
+    "delivery_unknown_reason": { "type": ["string", "null"] },
+    "metadata": { "type": "object", "additionalProperties": true }
+  }
+}

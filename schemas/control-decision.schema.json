@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codexpro.local/schemas/control-decision.schema.json",
+  "title": "CodexPro Control Decision",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "level",
+    "allowed",
+    "reason",
+    "reason_code",
+    "control_kind",
+    "control_scope",
+    "enforcement",
+    "recoverable",
+    "retryable",
+    "blocks_only",
+    "execution_mode"
+  ],
+  "properties": {
+    "level": { "enum": ["L0", "L1", "L2", "L3"] },
+    "allowed": { "type": "boolean" },
+    "reason": { "type": "string", "minLength": 1 },
+    "reason_code": { "type": "string", "minLength": 1 },
+    "control_kind": { "enum": ["invariant", "policy", "recovery", "evidence"] },
+    "control_scope": {
+      "enum": [
+        "workspace_entry",
+        "write_boundary",
+        "external_effect_boundary",
+        "delivery_claim_boundary",
+        "execution_policy",
+        "post_processing"
+      ]
+    },
+    "enforcement": { "enum": ["block", "degrade", "warn", "record"] },
+    "recoverable": { "type": "boolean" },
+    "retryable": { "type": "boolean" },
+    "blocks_only": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "execution_mode": { "enum": ["runtime", "benchmark", "high_risk_delivery"] }
+  }
+}

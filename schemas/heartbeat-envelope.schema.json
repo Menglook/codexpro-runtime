@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codexpro.local/schemas/heartbeat-envelope.schema.json",
+  "title": "CodexPro Heartbeat Envelope v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "heartbeat_id", "task_id", "run_id", "execution_id", "lane", "source", "owner_fingerprint", "fencing_token", "state", "reason", "liveness_at", "progress_at", "output_at", "progress_sequence", "progress_fingerprint", "expected_silence_until", "no_progress_deadline_at", "hard_deadline_at"],
+  "properties": {
+    "version": { "const": 1 },
+    "heartbeat_id": { "type": "string", "minLength": 1 },
+    "task_id": { "type": ["string", "null"] },
+    "run_id": { "type": "string", "minLength": 1 },
+    "execution_id": { "type": "string", "minLength": 1 },
+    "lane": { "enum": ["model_stream", "tool_process", "worker"] },
+    "source": { "type": "string", "minLength": 1 },
+    "owner_fingerprint": { "type": ["string", "null"] },
+    "fencing_token": { "type": ["integer", "null"], "minimum": 0 },
+    "state": { "enum": ["working", "silent", "waiting", "stale", "terminal"] },
+    "reason": { "type": ["string", "null"] },
+    "liveness_at": { "type": "string", "minLength": 1 },
+    "progress_at": { "type": ["string", "null"] },
+    "output_at": { "type": ["string", "null"] },
+    "progress_sequence": { "type": "integer", "minimum": 0 },
+    "progress_fingerprint": { "type": ["string", "null"] },
+    "expected_silence_until": { "type": ["string", "null"] },
+    "no_progress_deadline_at": { "type": ["string", "null"] },
+    "hard_deadline_at": { "type": ["string", "null"] }
+  }
+}

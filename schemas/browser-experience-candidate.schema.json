@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codexpro.local/schemas/browser-experience-candidate.schema.json",
+  "title": "CodexPro Browser Experience Candidate v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "candidate_id", "task_id", "run_id", "platform", "page", "fingerprint_changes", "successful_strategies", "failed_strategies", "recovery", "evidence_refs", "sensitive_scan", "duplicate_check", "targeted_regression", "suggested_skill_path", "approval", "automatic_long_term_write", "created_at"],
+  "properties": {
+    "version": { "const": 1 },
+    "candidate_id": { "$ref": "#/$defs/non_empty" },
+    "task_id": { "$ref": "#/$defs/non_empty" },
+    "run_id": { "$ref": "#/$defs/non_empty" },
+    "platform": { "$ref": "#/$defs/non_empty" },
+    "page": { "$ref": "#/$defs/non_empty" },
+    "fingerprint_changes": { "type": "array", "items": { "$ref": "#/$defs/non_empty" } },
+    "successful_strategies": { "type": "array", "items": { "$ref": "#/$defs/strategy_evidence" } },
+    "failed_strategies": { "type": "array", "items": { "$ref": "#/$defs/strategy_evidence" } },
+    "recovery": { "type": "array", "items": { "$ref": "#/$defs/non_empty" } },
+    "evidence_refs": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/non_empty" } },
+    "sensitive_scan": { "$ref": "#/$defs/check" },
+    "duplicate_check": { "$ref": "#/$defs/check" },
+    "targeted_regression": { "$ref": "#/$defs/check" },
+    "suggested_skill_path": { "$ref": "#/$defs/relative_path" },
+    "approval": {
+      "type": "object", "additionalProperties": false, "required": ["status", "approved_by", "approved_at"],
+      "properties": {
+        "status": { "enum": ["pending", "approved", "rejected"] },
+        "approved_by": { "type": ["string", "null"] },
+        "approved_at": { "type": ["string", "null"], "format": "date-time" }
+      }
+    },
+    "automatic_long_term_write": { "const": false },
+    "created_at": { "type": "string", "format": "date-time" }
+  },
+  "$defs": {
+    "non_empty": { "type": "string", "minLength": 1 },
+    "relative_path": { "type": "string", "minLength": 1, "pattern": "^(?!/)(?!.*\\.\\.)" },
+    "strategy_evidence": {
+      "type": "object", "additionalProperties": false, "required": ["method", "target", "evidence_ref"],
+      "properties": { "method": { "$ref": "#/$defs/non_empty" }, "target": { "$ref": "#/$defs/non_empty" }, "evidence_ref": { "$ref": "#/$defs/non_empty" } }
+    },
+    "check": {
+      "type": "object", "additionalProperties": false, "required": ["status", "notes"],
+      "properties": { "status": { "enum": ["pending", "passed", "failed"] }, "notes": { "type": "array", "items": { "$ref": "#/$defs/non_empty" } } }
+    }
+  }
+}

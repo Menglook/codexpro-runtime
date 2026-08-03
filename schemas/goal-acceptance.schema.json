@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codexpro.local/schemas/goal-acceptance.schema.json",
+  "title": "CodexPro Goal Acceptance Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "items"],
+  "properties": {
+    "version": { "const": 1 },
+    "source": {
+      "type": "string",
+      "enum": ["user", "project", "inferred"]
+    },
+    "items": {
+      "type": "array",
+      "maxItems": 100,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["description"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9._-]{1,120}$"
+          },
+          "category": {
+            "type": "string",
+            "enum": ["functional", "visual", "regression", "security", "performance", "forbidden", "evidence"]
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4000
+          },
+          "blocking": { "type": "boolean" },
+          "verifier": {
+            "type": "string",
+            "enum": ["command", "browser", "diff", "review", "manual", "state"]
+          },
+          "verifier_config": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      }
+    }
+  }
+}

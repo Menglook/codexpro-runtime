@@ -1,0 +1,77 @@
+default_profile: default
+profiles:
+  default:
+    description: Changed-file based default acceptance. Compatibility alias for targeted-build.
+    alias_profile: targeted-build
+    commands: []
+  quick:
+    description: Compatibility alias for targeted.
+    alias_profile: targeted
+    commands: []
+  docs:
+    description: Deterministic checks for documentation-only changes.
+    commands:
+      - name: docs-diff-check
+        command: git diff --check
+        timeout_ms: 30000
+  targeted:
+    description: Changed-file Test Impact Graph; a single smoke-script change runs only that script.
+    dynamic_test_impact: true
+    test_impact_level: targeted
+    include_build: false
+    commands: []
+  targeted-build:
+    description: Changed-file Test Impact Graph with build coverage.
+    dynamic_test_impact: true
+    test_impact_level: targeted
+    include_build: true
+    commands:
+      - name: build
+        command: npm run build
+        timeout_ms: 120000
+  full:
+    description: Full local checks for core control-plane or uncovered changes.
+    commands:
+      - name: build
+        command: npm run build
+        timeout_ms: 120000
+      - name: smoke
+        command: npm run smoke
+        timeout_ms: 180000
+        resource_profile: acceptance-full-test
+        test_scope: full
+  browser:
+    description: Build plus browser acceptance for Browser Bridge changes.
+    commands:
+      - name: build
+        command: npm run build
+        timeout_ms: 120000
+      - name: browser-smoke
+        command: npm run browser-smoke
+        timeout_ms: 180000
+  # Full test suites are intentionally not enabled by default. When a release really
+  # requires `npm test`, add a dedicated command with all of the following fields:
+  # resource_profile: acceptance-full-test
+  # test_scope: full
+  # allow_full_test: true
+  # max_workers: 2
+  # require_non_watch_mode: true
+  # timeout_ms: 300000
+  # CodexPro will still block the command unless package.json resolves to a bounded
+  # Vitest, Jest, or Playwright invocation.
+  release:
+    description: Release checks; never selected as a reduced targeted profile.
+    commands:
+      - name: build
+        command: npm run build
+        timeout_ms: 120000
+      - name: smoke
+        command: npm run smoke
+        timeout_ms: 180000
+        resource_profile: acceptance-full-test
+        test_scope: full
+      - name: browser-smoke
+        command: npm run browser-smoke
+        timeout_ms: 180000
+        resource_profile: acceptance-full-test
+        test_scope: full

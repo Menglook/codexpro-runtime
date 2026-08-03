@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codexpro.local/schemas/browser-evidence-conflict.schema.json",
+  "title": "CodexPro Browser Evidence Conflict v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "conflict_id", "inspection_id", "fact", "type", "semantic_value", "visual_value", "resolution", "confidence", "stop_required", "limitations", "evidence_refs", "created_at"],
+  "properties": {
+    "version": { "const": 1 },
+    "conflict_id": { "$ref": "#/$defs/non_empty" },
+    "inspection_id": { "$ref": "#/$defs/non_empty" },
+    "fact": { "$ref": "#/$defs/non_empty" },
+    "type": { "enum": ["text_value", "layout", "crop", "color", "canvas_value", "semantic_missing", "unresolved"] },
+    "semantic_value": {},
+    "visual_value": {},
+    "resolution": { "enum": ["prefer_structured", "prefer_visual", "estimated", "unknown", "human_required"] },
+    "confidence": { "enum": ["high", "medium", "low", "unknown"] },
+    "stop_required": { "type": "boolean" },
+    "limitations": { "type": "array", "items": { "$ref": "#/$defs/non_empty" } },
+    "evidence_refs": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/non_empty" } },
+    "created_at": { "type": "string", "format": "date-time" }
+  },
+  "$defs": { "non_empty": { "type": "string", "minLength": 1 } }
+}

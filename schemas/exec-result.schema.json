@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CodexPro Exec Result v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "status",
+    "summary",
+    "changed_files",
+    "follow_up_prompt",
+    "error_code",
+    "error_message"
+  ],
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": ["succeeded", "failed", "waiting_input", "waiting_approval"]
+    },
+    "summary": {
+      "type": "string",
+      "maxLength": 20000
+    },
+    "changed_files": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 1000
+      },
+      "maxItems": 1000
+    },
+    "follow_up_prompt": {
+      "type": ["string", "null"],
+      "maxLength": 20000
+    },
+    "error_code": {
+      "type": ["string", "null"],
+      "maxLength": 200
+    },
+    "error_message": {
+      "type": ["string", "null"],
+      "maxLength": 20000
+    }
+  }
+}

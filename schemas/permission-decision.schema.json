@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codexpro.local/schemas/permission-decision.schema.json",
+  "title": "Monotonic Permission Decision v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "decision_id",
+    "final_decision",
+    "sources",
+    "constraints",
+    "reasons",
+    "evidence_refs",
+    "audit_hash"
+  ],
+  "properties": {
+    "version": { "const": 1 },
+    "decision_id": { "type": "string", "minLength": 1 },
+    "final_decision": { "enum": ["allow", "constrained", "sandbox", "ask", "deny"] },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["source", "decision", "reason", "constraints", "evidence_refs"],
+        "properties": {
+          "source": { "type": "string", "minLength": 1 },
+          "decision": { "enum": ["allow", "constrained", "sandbox", "ask", "deny"] },
+          "reason": { "type": "string", "minLength": 1 },
+          "constraints": { "type": "array", "items": { "type": "string" } },
+          "evidence_refs": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "constraints": { "type": "array", "items": { "type": "string" } },
+    "reasons": { "type": "array", "items": { "type": "string" } },
+    "evidence_refs": { "type": "array", "items": { "type": "string" } },
+    "audit_hash": { "type": "string", "minLength": 1 }
+  }
+}

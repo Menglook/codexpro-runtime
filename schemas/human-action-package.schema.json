@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codexpro.local/schemas/human-action-package.schema.json",
+  "title": "CodexPro Human Action Package v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "package_id", "task_id", "run_id", "task_contract_hash", "platform", "shop_context", "business_object", "current_facts", "recommended_action", "reason", "current_page", "steps", "human_final_action", "forbidden_actions", "expected_result", "risk_warnings", "post_action_verification", "before_evidence", "handoff_time"],
+  "properties": {
+    "version": { "const": 1 },
+    "package_id": { "type": "string", "minLength": 1 },
+    "task_id": { "type": "string", "minLength": 1 },
+    "run_id": { "type": "string", "minLength": 1 },
+    "task_contract_hash": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "platform": { "type": "string", "minLength": 1 },
+    "shop_context": { "$ref": "browser-business-task.schema.json#/$defs/shop_context" },
+    "business_object": { "$ref": "browser-business-task.schema.json#/$defs/business_object" },
+    "current_facts": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/business_fact" }
+    },
+    "recommended_action": { "type": "string", "minLength": 1 },
+    "reason": { "type": "string", "minLength": 1 },
+    "current_page": { "$ref": "#/$defs/current_page" },
+    "steps": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["index", "instruction", "human_required"],
+        "properties": {
+          "index": { "type": "integer", "minimum": 1 },
+          "instruction": { "type": "string", "minLength": 1 },
+          "action": { "type": "string", "minLength": 1 },
+          "human_required": { "type": "boolean" }
+        }
+      }
+    },
+    "human_final_action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "must_be_performed_by", "requires_confirmation"],
+      "properties": {
+        "label": { "type": "string", "minLength": 1 },
+        "must_be_performed_by": { "const": "human" },
+        "requires_confirmation": { "type": "boolean" },
+        "irreversible": { "type": "boolean" }
+      }
+    },
+    "forbidden_actions": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "expected_result": { "type": "string", "minLength": 1 },
+    "risk_warnings": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "post_action_verification": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "before_evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "handoff_time": { "type": "string", "minLength": 1 }
+  },
+  "$defs": {
+    "business_fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key"],
+      "properties": {
+        "key": { "type": "string", "minLength": 1 },
+        "label": { "type": "string", "minLength": 1 },
+        "value": { "type": ["string", "number", "boolean", "null"] },
+        "evidence_refs": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "observed_at": { "type": "string", "minLength": 1 },
+        "source": { "type": "string", "minLength": 1 }
+      }
+    },
+    "current_page": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["area"],
+      "properties": {
+        "url": { "type": "string", "minLength": 1 },
+        "title": { "type": "string", "minLength": 1 },
+        "area": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

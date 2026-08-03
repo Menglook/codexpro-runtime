@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codexpro.local/schemas/authorization-payload-integrity.schema.json",
+  "title": "Authorization Payload Integrity v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "raw_hash",
+    "normalized_hash",
+    "normalized_payload",
+    "unicode_findings",
+    "changed",
+    "requires_warning",
+    "requires_manual_confirmation"
+  ],
+  "properties": {
+    "version": { "const": 1 },
+    "raw_hash": { "type": "string", "minLength": 1 },
+    "normalized_hash": { "type": "string", "minLength": 1 },
+    "normalized_payload": {},
+    "unicode_findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "severity", "path", "code_points", "message"],
+        "properties": {
+          "code": {
+            "enum": [
+              "bidi_control",
+              "zero_width_character",
+              "invisible_separator",
+              "nonstandard_quote",
+              "nonstandard_dash",
+              "unicode_compatibility_change",
+              "mixed_script_identifier",
+              "normalized_key_collision",
+              "non_json_scalar"
+            ]
+          },
+          "severity": { "enum": ["warning", "manual_confirmation"] },
+          "path": { "type": "string", "minLength": 1 },
+          "code_points": { "type": "array", "items": { "type": "string" } },
+          "message": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "changed": { "type": "boolean" },
+    "requires_warning": { "type": "boolean" },
+    "requires_manual_confirmation": { "type": "boolean" }
+  }
+}

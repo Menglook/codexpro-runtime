@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codexpro.dev/schemas/gold-task-run.schema.json",
+  "title": "CodexPro Gold Task Suite Run v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version", "suite_run_id", "suite_id", "measurement_phase", "runtime_version", "git_sha",
+    "started_at", "finished_at", "task_results"
+  ],
+  "properties": {
+    "version": { "const": 1 },
+    "suite_run_id": { "$ref": "#/$defs/nonEmptyString" },
+    "suite_id": { "$ref": "#/$defs/nonEmptyString" },
+    "measurement_phase": { "enum": ["baseline", "candidate"] },
+    "runtime_version": { "$ref": "#/$defs/nonEmptyString" },
+    "git_sha": { "$ref": "#/$defs/sha" },
+    "started_at": { "type": "string", "format": "date-time" },
+    "finished_at": { "type": "string", "format": "date-time" },
+    "task_results": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/taskResult" } }
+  },
+  "$defs": {
+    "nonEmptyString": { "type": "string", "minLength": 1 },
+    "sha": { "type": "string", "pattern": "^[a-fA-F0-9]{40}$" },
+    "stringArray": { "type": "array", "items": { "$ref": "#/$defs/nonEmptyString" }, "uniqueItems": true },
+    "count": { "type": "integer", "minimum": 0 },
+    "taskResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "task_id", "attempt", "started_at", "finished_at", "outcome", "acceptance_passed",
+        "completion_proof_verified", "wrong_change_detected", "false_completion_detected",
+        "human_intervention_count", "tool_call_count", "wall_clock_duration_ms", "irrelevant_context_bytes",
+        "recovery_attempted", "recovery_succeeded", "duplicate_side_effect_count", "unauthorized_side_effect_count",
+        "external_network_call_count", "codex_cli_invocation_count",
+        "api_key_use_count", "zero_model_policy_verified", "evidence_paths", "usage_entry_ids",
+        "execution_origin_receipt_paths"
+      ],
+      "properties": {
+        "task_id": { "$ref": "#/$defs/nonEmptyString" },
+        "attempt": { "type": "integer", "minimum": 1 },
+        "started_at": { "type": "string", "format": "date-time" },
+        "finished_at": { "type": "string", "format": "date-time" },
+        "outcome": { "enum": ["passed", "failed", "blocked", "cancelled"] },
+        "acceptance_passed": { "type": "boolean" },
+        "completion_proof_verified": { "type": "boolean" },
+        "wrong_change_detected": { "type": "boolean" },
+        "false_completion_detected": { "type": "boolean" },
+        "human_intervention_count": { "$ref": "#/$defs/count" },
+        "tool_call_count": { "$ref": "#/$defs/count" },
+        "wall_clock_duration_ms": { "$ref": "#/$defs/count" },
+        "irrelevant_context_bytes": { "oneOf": [{ "$ref": "#/$defs/count" }, { "type": "null" }] },
+        "recovery_attempted": { "type": "boolean" },
+        "recovery_succeeded": { "oneOf": [{ "type": "boolean" }, { "type": "null" }] },
+        "duplicate_side_effect_count": { "$ref": "#/$defs/count" },
+        "unauthorized_side_effect_count": { "$ref": "#/$defs/count" },
+        "external_network_call_count": { "$ref": "#/$defs/count" },
+        "codex_cli_invocation_count": { "$ref": "#/$defs/count" },
+        "api_key_use_count": { "$ref": "#/$defs/count" },
+        "zero_model_policy_verified": { "type": "boolean" },
+        "failure_classification": { "oneOf": [{ "$ref": "#/$defs/nonEmptyString" }, { "type": "null" }] },
+        "stop_reason": { "oneOf": [{ "$ref": "#/$defs/nonEmptyString" }, { "type": "null" }] },
+        "last_progress_at": { "oneOf": [{ "type": "string", "format": "date-time" }, { "type": "null" }] },
+        "supervisor_terminated": { "type": "boolean" },
+        "tree_terminated": { "type": "boolean" },
+        "completion_check_passed": { "type": "boolean" },
+        "evidence_paths": { "$ref": "#/$defs/stringArray" },
+        "usage_entry_ids": { "$ref": "#/$defs/stringArray" },
+        "execution_origin_receipt_paths": { "$ref": "#/$defs/stringArray" }
+      }
+    }
+  }
+}

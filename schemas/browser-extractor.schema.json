@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codexpro.local/schemas/browser-extractor.schema.json",
+  "title": "CodexPro Browser Structured Extractor v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "id", "platform", "page_fingerprint_ref", "fields", "completeness_rules", "redaction_required"],
+  "properties": {
+    "version": { "const": 1 },
+    "id": { "$ref": "#/$defs/non_empty" },
+    "platform": { "$ref": "#/$defs/non_empty" },
+    "page_fingerprint_ref": { "$ref": "#/$defs/non_empty" },
+    "fields": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/field" } },
+    "completeness_rules": {
+      "type": "object", "additionalProperties": false,
+      "required": ["required_field_keys", "sample_must_not_be_reported_as_complete"],
+      "properties": {
+        "required_field_keys": { "type": "array", "items": { "$ref": "#/$defs/non_empty" }, "uniqueItems": true },
+        "sample_must_not_be_reported_as_complete": { "const": true }
+      }
+    },
+    "redaction_required": { "const": true }
+  },
+  "$defs": {
+    "non_empty": { "type": "string", "minLength": 1 },
+    "field": {
+      "type": "object", "additionalProperties": false,
+      "required": ["key", "metric_name", "source", "strategies", "required"],
+      "properties": {
+        "key": { "$ref": "#/$defs/non_empty" },
+        "metric_name": { "$ref": "#/$defs/non_empty" },
+        "unit": { "type": "string" },
+        "period": { "type": "string" },
+        "source": { "enum": ["semantic", "table", "page_data", "network_fact"] },
+        "strategies": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/strategy" } },
+        "required": { "type": "boolean" }
+      }
+    },
+    "strategy": {
+      "type": "object", "additionalProperties": false, "required": ["order", "method", "target"],
+      "properties": {
+        "order": { "type": "integer", "minimum": 1 },
+        "method": { "enum": ["business_semantic", "stable_element_ref", "role_name", "stable_selector", "network_field"] },
+        "target": { "$ref": "#/$defs/non_empty" }
+      }
+    }
+  }
+}

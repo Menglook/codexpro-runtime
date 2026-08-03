@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codexpro.local/schemas/runtime-capability-certificate.schema.json",
+  "title": "CodexPro Runtime Capability Certificate Bundle",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "bundle", "capabilities"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schema_version": { "const": 1 },
+    "bundle": { "$ref": "#/$defs/bundle" },
+    "capabilities": {
+      "type": "array",
+      "minItems": 16,
+      "items": { "$ref": "#/$defs/capability" }
+    }
+  },
+  "$defs": {
+    "status": {
+      "type": "string",
+      "enum": ["certified", "provisionally_certified", "implemented_not_certified", "missing"]
+    },
+    "path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?!.*\\.\\.)[A-Za-z0-9._/@+()\\-\\u4e00-\\u9fff ]+$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "non_empty_strings": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "package_version", "runtime_version"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "package_version": { "type": "string", "minLength": 1 },
+        "runtime_version": { "type": "string", "minLength": 1 }
+      }
+    },
+    "bundle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "certificate_bundle_id",
+        "bundle_version",
+        "project",
+        "certification_profile",
+        "source_baseline",
+        "final_matrix",
+        "certified_at",
+        "downgrade_rules",
+        "evidence_fingerprint"
+      ],
+      "properties": {
+        "certificate_bundle_id": { "type": "string", "minLength": 1 },
+        "bundle_version": { "type": "string", "minLength": 1 },
+        "project": { "$ref": "#/$defs/project" },
+        "certification_profile": { "type": "string", "minLength": 1 },
+        "source_baseline": { "$ref": "#/$defs/path" },
+        "final_matrix": { "$ref": "#/$defs/path" },
+        "certified_at": { "type": "string", "minLength": 1 },
+        "downgrade_rules": { "$ref": "#/$defs/non_empty_strings" },
+        "evidence_fingerprint": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "status_change": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["baseline_status", "final_status", "changed", "reason", "upgrade_evidence"],
+      "properties": {
+        "baseline_status": { "$ref": "#/$defs/status" },
+        "final_status": { "$ref": "#/$defs/status" },
+        "changed": { "type": "boolean" },
+        "reason": { "type": "string" },
+        "upgrade_evidence": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/path" }
+        }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "id", "path"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "implementation_contract",
+            "contract_schema",
+            "automated_test",
+            "real_regression_report",
+            "acceptance_profile"
+          ]
+        },
+        "id": { "type": "string", "minLength": 1 },
+        "path": { "$ref": "#/$defs/path" },
+        "profile": { "type": "string", "minLength": 1 },
+        "command": { "type": "string", "minLength": 1 },
+        "notes": { "type": "string" }
+      }
+    },
+    "capability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "certificate_id",
+        "capability_id",
+        "stable_name",
+        "status",
+        "contract_version",
+        "certification_profile",
+        "status_change",
+        "can_do",
+        "cannot_do",
+        "prerequisites",
+        "operating_conditions",
+        "automatic_recovery",
+        "manual_intervention",
+        "known_limits",
+        "failure_criteria",
+        "evidence",
+        "evidence_fingerprint"
+      ],
+      "properties": {
+        "certificate_id": { "type": "string", "pattern": "^CRC-RC-[0-9]{2}-v1$" },
+        "capability_id": { "type": "string", "pattern": "^RC-[0-9]{2}$" },
+        "stable_name": { "type": "string", "minLength": 1 },
+        "status": { "$ref": "#/$defs/status" },
+        "contract_version": { "type": "string", "minLength": 1 },
+        "certification_profile": { "type": "string", "minLength": 1 },
+        "status_change": { "$ref": "#/$defs/status_change" },
+        "can_do": { "$ref": "#/$defs/non_empty_strings" },
+        "cannot_do": { "$ref": "#/$defs/non_empty_strings" },
+        "prerequisites": { "$ref": "#/$defs/non_empty_strings" },
+        "operating_conditions": { "$ref": "#/$defs/non_empty_strings" },
+        "automatic_recovery": { "$ref": "#/$defs/non_empty_strings" },
+        "manual_intervention": { "$ref": "#/$defs/non_empty_strings" },
+        "known_limits": { "$ref": "#/$defs/non_empty_strings" },
+        "failure_criteria": { "$ref": "#/$defs/non_empty_strings" },
+        "evidence": {
+          "type": "array",
+          "minItems": 4,
+          "items": { "$ref": "#/$defs/evidence" }
+        },
+        "evidence_fingerprint": { "$ref": "#/$defs/sha256" }
+      }
+    }
+  }
+}

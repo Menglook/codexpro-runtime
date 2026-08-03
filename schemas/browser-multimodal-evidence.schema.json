@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codexpro.local/schemas/browser-multimodal-evidence.schema.json",
+  "title": "CodexPro Browser Multimodal Evidence v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "evidence_id", "inspection_id", "semantic_snapshot_id", "visual_evidence", "facts", "redacted", "created_at"],
+  "properties": {
+    "version": { "const": 1 },
+    "evidence_id": { "$ref": "#/$defs/non_empty" },
+    "inspection_id": { "$ref": "#/$defs/non_empty" },
+    "semantic_snapshot_id": { "$ref": "#/$defs/non_empty" },
+    "visual_evidence": { "type": "array", "items": { "$ref": "#/$defs/visual" } },
+    "facts": { "type": "array", "items": { "$ref": "#/$defs/fused_fact" } },
+    "redacted": { "const": true },
+    "created_at": { "type": "string", "format": "date-time" }
+  },
+  "$defs": {
+    "non_empty": { "type": "string", "minLength": 1 },
+    "relative_path": { "type": "string", "minLength": 1, "pattern": "^(?!/)(?!.*\\.\\.)" },
+    "visual": {
+      "type": "object", "additionalProperties": false,
+      "required": ["evidence_ref", "reason", "scope", "image_path", "linked_snapshot_id", "may_authorize_interaction"],
+      "properties": {
+        "evidence_ref": { "$ref": "#/$defs/non_empty" },
+        "reason": { "enum": ["layout", "image_crop", "responsive", "style", "canvas", "video", "cross_origin_frame", "semantic_empty", "semantic_conflict", "manual"] },
+        "scope": { "$ref": "#/$defs/non_empty" },
+        "image_path": { "$ref": "#/$defs/relative_path" },
+        "linked_snapshot_id": { "$ref": "#/$defs/non_empty" },
+        "may_authorize_interaction": { "const": false }
+      }
+    },
+    "fused_fact": {
+      "type": "object", "additionalProperties": false,
+      "required": ["fact", "value", "source", "confidence", "semantic_evidence_refs", "visual_evidence_refs", "conflict", "limitations"],
+      "properties": {
+        "fact": { "$ref": "#/$defs/non_empty" }, "value": {},
+        "source": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "enum": ["semantic", "visual", "network"] } },
+        "confidence": { "enum": ["high", "medium", "low", "unknown"] },
+        "semantic_evidence_refs": { "type": "array", "items": { "$ref": "#/$defs/non_empty" } },
+        "visual_evidence_refs": { "type": "array", "items": { "$ref": "#/$defs/non_empty" } },
+        "conflict": { "type": "boolean" },
+        "limitations": { "type": "array", "items": { "$ref": "#/$defs/non_empty" } }
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "id": "generic.demo-page",
+  "platform": "generic",
+  "page": "generic demo",
+  "signals": [
+    {
+      "type": "hostname",
+      "value": "example",
+      "match": "contains",
+      "required": true
+    }
+  ],
+  "minimum_required_matches": 1,
+  "on_mismatch": "warning_readonly",
+  "verified_at": null
+}

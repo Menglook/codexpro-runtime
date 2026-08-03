@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codexpro.local/schemas/authorization-payload-binding.schema.json",
+  "title": "Authorization Payload Binding v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "binding_id",
+    "payload_version",
+    "scope",
+    "raw_hash",
+    "normalized_hash",
+    "approved_payload_hash",
+    "executed_payload_hash",
+    "approved_by",
+    "approved_at",
+    "manual_confirmation",
+    "finding_codes"
+  ],
+  "properties": {
+    "version": { "const": 1 },
+    "binding_id": { "type": "string", "minLength": 1 },
+    "payload_version": { "type": "integer", "minimum": 1 },
+    "scope": { "type": "string", "minLength": 1 },
+    "raw_hash": { "type": "string", "minLength": 1 },
+    "normalized_hash": { "type": "string", "minLength": 1 },
+    "approved_payload_hash": { "type": "string", "minLength": 1 },
+    "executed_payload_hash": { "type": ["string", "null"] },
+    "approved_by": { "type": "string", "minLength": 1 },
+    "approved_at": { "type": "string", "minLength": 1 },
+    "manual_confirmation": { "type": "boolean" },
+    "finding_codes": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "bidi_control",
+          "zero_width_character",
+          "invisible_separator",
+          "nonstandard_quote",
+          "nonstandard_dash",
+          "unicode_compatibility_change",
+          "mixed_script_identifier",
+          "normalized_key_collision",
+          "non_json_scalar"
+        ]
+      }
+    }
+  }
+}

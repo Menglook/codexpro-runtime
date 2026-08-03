@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CodexPro Project Profile",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "name": { "type": "string" },
+    "kind": { "type": "string" },
+    "profile_version": { "type": "integer" },
+    "description": { "type": "string" },
+    "package_manager": { "type": "string" },
+    "primary_language": { "type": "string" },
+    "frameworks": { "type": "array", "items": { "type": "string" } },
+    "adapters": { "type": "array", "items": { "type": "string" } },
+    "important_paths": { "type": "array", "items": { "type": "string" } },
+    "blocked_paths": { "type": "array", "items": { "type": "string" } },
+    "risk_paths": { "type": "array", "items": { "type": "string" } },
+    "entrypoints": { "type": "array", "items": { "type": "string" } },
+    "env_files": { "type": "array", "items": { "type": "string" } },
+    "docker_services": { "type": "array", "items": { "type": "string" } },
+    "rules": { "type": "array", "items": { "type": "string" } },
+    "business_rules": { "type": "array", "items": { "type": "string" } },
+    "commands": {
+      "type": "object",
+      "additionalProperties": {
+        "oneOf": [
+          { "type": "string" },
+          { "type": "array", "items": { "type": "string" } }
+        ]
+      }
+    },
+    "paths": {
+      "type": "object",
+      "additionalProperties": { "type": "array", "items": { "type": "string" } }
+    },
+    "browser": {
+      "type": "object",
+      "properties": {
+        "base_url": { "type": "string" },
+        "smoke_urls": { "type": "array", "items": { "type": "string" } },
+        "visual_pairs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["before_url", "after_url"],
+            "properties": {
+              "name": { "type": "string" },
+              "before_url": { "type": "string" },
+              "after_url": { "type": "string" }
+            }
+          }
+        },
+        "visual_threshold_ratio": { "type": "number", "minimum": 0, "maximum": 1 },
+        "visual_pixel_delta_threshold": { "type": "integer", "minimum": 0, "maximum": 255 },
+        "allowed_domains": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "context": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "max_files_per_task": { "type": "integer", "minimum": 1 },
+        "max_lines_per_file": { "type": "integer", "minimum": 20 },
+        "max_total_chars": { "type": "integer", "minimum": 10000 }
+      }
+    },
+    "acceptance": { "type": "object" },
+    "notes": { "type": "array", "items": { "type": "string" } }
+  }
+}

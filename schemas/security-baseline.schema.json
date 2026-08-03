@@ -1,0 +1,146 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codexpro.local/schemas/security-baseline.schema.json",
+  "title": "CodexPro Security Baseline",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "schema_version",
+    "baseline_id",
+    "policy_id",
+    "policy_version",
+    "created_at",
+    "updated_at",
+    "approval",
+    "entries",
+    "integrity"
+  ],
+  "properties": {
+    "kind": { "const": "codexpro_security_baseline" },
+    "schema_version": { "const": 1 },
+    "baseline_id": { "type": "string", "minLength": 1 },
+    "policy_id": { "type": "string", "minLength": 1 },
+    "policy_version": { "type": "string", "minLength": 1 },
+    "created_at": { "type": "string", "format": "date-time" },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "approval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "approved_by", "approved_at"],
+      "properties": {
+        "mode": { "const": "manual" },
+        "approved_by": { "type": "string", "minLength": 1 },
+        "approved_at": { "type": "string", "format": "date-time" }
+      }
+    },
+    "entries": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/entry" }
+    },
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "digest"],
+      "properties": {
+        "algorithm": { "const": "sha256" },
+        "digest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "workspace_path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+    },
+    "finding_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fingerprint",
+        "fingerprint_version",
+        "rule",
+        "rule_version",
+        "path",
+        "evidence_kind",
+        "expression_kind"
+      ],
+      "properties": {
+        "fingerprint": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "fingerprint_version": { "type": "string", "minLength": 1 },
+        "rule": { "type": "string", "minLength": 1 },
+        "rule_version": { "type": "string", "minLength": 1 },
+        "path": { "$ref": "#/$defs/workspace_path" },
+        "evidence_kind": {
+          "enum": [
+            "literal",
+            "path",
+            "command",
+            "sql",
+            "console",
+            "configuration",
+            "syntax",
+            "scan_metadata",
+            "controlled_test_vector",
+            "rule_definition",
+            "static_text",
+            "execution_sink",
+            "database_sink"
+          ]
+        },
+        "expression_kind": {
+          "enum": [
+            "path_presence",
+            "double_quoted_literal",
+            "single_quoted_literal",
+            "template_literal",
+            "concatenation",
+            "call_expression",
+            "reference",
+            "command_text",
+            "sql_text",
+            "console_call",
+            "pattern"
+          ]
+        }
+      }
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "entry_id",
+        "finding",
+        "disposition",
+        "reason",
+        "owner",
+        "approved_at"
+      ],
+      "properties": {
+        "entry_id": { "type": "string", "minLength": 1 },
+        "finding": { "$ref": "#/$defs/finding_identity" },
+        "disposition": { "enum": ["false_positive", "accepted_risk"] },
+        "reason": { "type": "string", "minLength": 1 },
+        "owner": { "type": "string", "minLength": 1 },
+        "approved_at": { "type": "string", "format": "date-time" },
+        "expires_at": { "type": "string", "format": "date-time" }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "disposition": { "const": "accepted_risk" } },
+            "required": ["disposition"]
+          },
+          "then": { "required": ["expires_at"] }
+        }
+      ]
+    }
+  }
+}
