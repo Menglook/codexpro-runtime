@@ -6,6 +6,8 @@ CodexPro Runtime is currently an independently maintained source-preview project
 
 The current primary maintainer is [Menglook](https://github.com/Menglook).
 
+The GitHub account `@Menglook` is the applicant's public maintainer identity and the owner-admin identity for this repository. Repository administration, issue triage, security response, release authorization, and any future package publication remain the responsibility of the human maintainer using that account. Commit metadata may show a configured author name, but it does not transfer maintainership or independent-contributor status to an AI system or automation.
+
 The primary maintainer is responsible for:
 
 - architecture and public roadmap decisions;
