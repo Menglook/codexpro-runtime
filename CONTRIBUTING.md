@@ -1,51 +1,84 @@
 # Contributing
 
-CodexPro is early. Good contributions make it safer, faster, and easier to explain.
+CodexPro Runtime is an early public source preview. Good contributions make the runtime safer, more testable, easier to explain, and more useful to open-source maintainers.
 
-## Local Setup
+## Before you start
+
+Read:
+
+- [README.md](README.md)
+- [Architecture](docs/architecture.md)
+- [Security model](docs/security-model.md)
+- [Public boundary](docs/public-boundary.md)
+
+Changes must remain generic and independent of private operational configuration.
+
+## Local setup
 
 ```bash
-npm install
+git clone https://github.com/Menglook/codexpro-runtime.git
+cd codexpro-runtime
+npm ci --ignore-scripts --no-audit --no-fund
+npm run typecheck
 npm run build
-npm run smoke
+npm run cli:help
+npm run pack:dry-run
 ```
 
-Run a local connector:
+## Useful contribution areas
 
-```bash
-npm run connect:local -- --root /path/to/test/repo
-```
+- safer capability defaults;
+- clearer authorization and failure outcomes;
+- workspace isolation and path-guard tests;
+- durable task, validation, review, and recovery evidence;
+- smaller and faster context handling;
+- reusable MCP and browser primitives;
+- documentation that reduces setup and security mistakes;
+- cross-platform source-build fixes.
 
-Run through a Cloudflare quick tunnel:
+## Pull request checklist
 
-```bash
-npm run connect -- --root /path/to/test/repo --bash safe --write handoff
-```
-
-## Useful Areas
-
-- safer tool defaults
-- better setup diagnostics
-- stable tunnel setup helpers
-- smaller/faster context bundles
-- clearer ChatGPT tool prompts
-- better Apps SDK widgets
-- tests for path guards and auth boundaries
-- docs that reduce user setup mistakes
-
-## Pull Request Checklist
-
-- Keep the change scoped.
-- Do not include local tunnel URLs, auth tokens, `.env` values, or private paths.
+- Keep the change focused.
+- Explain the user or maintainer problem.
+- Describe security and side-effect impact.
+- Add or update focused validation where possible.
+- Run `npm run typecheck`.
 - Run `npm run build`.
-- Run `npm run smoke`.
-- Update `README.md` or `CHANGELOG.md` when behavior changes.
-- Explain security impact for changes touching auth, file access, shell execution, or tunnels.
+- Run `npm run cli:help`.
+- Run `npm run pack:dry-run` when package contents may change.
+- Update public documentation when behavior changes.
+- State what was not tested.
 
-## Docs Style
+## Prohibited content
 
-- Be concrete.
-- Avoid hype.
-- Name the exact command, mode, flag, and failure case.
-- Make risk boundaries clear.
-- Prefer examples that use `/path/to/repo` and `codexpro.example.com`, not local machine paths.
+Do not include:
+
+- credentials, tokens, cookies, or private keys;
+- `.env` values;
+- private repository contents or URLs;
+- customer or business data;
+- production hostnames or tunnel identity;
+- local machine paths or usernames;
+- `.codexpro` runtime evidence;
+- `.ai-bridge` task snapshots;
+- internal reports or screenshots.
+
+## Documentation style
+
+- Be concrete and testable.
+- Avoid hype and implied endorsements.
+- Name exact commands, modes, flags, and failure cases.
+- Distinguish source preview, npm package, release, app, and hosted-service status.
+- Use `/path/to/repo` and `codexpro.example.com` placeholders.
+- Do not claim upstream metrics as this repository's adoption.
+
+## Security changes
+
+For changes touching authentication, file access, shell execution, redaction, tunnels, browser control, or workspace binding:
+
+- describe the threat being addressed;
+- identify fail-open and fail-closed behavior;
+- include a focused negative test or verification path;
+- avoid posting active vulnerability details publicly before disclosure coordination.
+
+Follow [SECURITY.md](SECURITY.md) for vulnerability reporting.

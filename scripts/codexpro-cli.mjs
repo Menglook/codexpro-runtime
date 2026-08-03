@@ -99,13 +99,13 @@ function printTaskHelp() {
   console.log(`CodexPro task commands
 
 Exec Runner v1:
-  codexpro task run --objective "implement the fix" --idempotency-key fix-123
-  codexpro task status --task-id <task-id>
-  codexpro task status --goal-id <goal-id> --raw-goal
-  codexpro task resume --goal-id <goal-id> --prompt "continue with this input"
-  codexpro task cancel --goal-id <goal-id>
-  codexpro task review --goal-id <goal-id>
-  codexpro task hooks-replay --goal-id <goal-id>
+  menglook-codexpro task run --objective "implement the fix" --idempotency-key fix-123
+  menglook-codexpro task status --task-id <task-id>
+  menglook-codexpro task status --goal-id <goal-id> --raw-goal
+  menglook-codexpro task resume --goal-id <goal-id> --prompt "continue with this input"
+  menglook-codexpro task cancel --goal-id <goal-id>
+  menglook-codexpro task review --goal-id <goal-id>
+  menglook-codexpro task hooks-replay --goal-id <goal-id>
 
 Exec options:
   --root <dir>                 Workspace root. Default: current directory.
@@ -132,9 +132,9 @@ Exec options:
   --codex-hook-worklog-dir <dir> Shared context-card worklog directory.
 
 Task templates (backward compatible):
-  codexpro task bugfix --dry-run
-  codexpro task ui-fix --task "fix header alignment"
-  codexpro task release-check
+  menglook-codexpro task bugfix --dry-run
+  menglook-codexpro task ui-fix --task "fix header alignment"
+  menglook-codexpro task release-check
 
 Template options:
   --template <name>            Template name; positional name is also accepted.
@@ -154,7 +154,7 @@ Template options:
 function requireBuild(relativeEntry) {
   const entry = path.join(projectRoot, relativeEntry);
   if (!fs.existsSync(entry)) {
-    throw new Error('Build artifacts are missing. Run npm run build before using codexpro task.');
+    throw new Error('Build artifacts are missing. Run npm run build before using menglook-codexpro task.');
   }
   return entry;
 }
@@ -425,7 +425,7 @@ export function runNotification(argv) {
     console.log(`CodexPro notification command
 
 Usage:
-  codexpro notify --status success --title "CodexPro 任务完成：Stage 9A" --body "任务已完成。" --project example-project-a --next-step "查看结果。"
+  menglook-codexpro notify --status success --title "CodexPro 任务完成：Stage 9A" --body "任务已完成。" --project example-project-a --next-step "查看结果。"
 
 Options:
   --status <status>      success, failed, waiting, start, or info. Default: info.

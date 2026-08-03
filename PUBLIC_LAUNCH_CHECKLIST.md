@@ -1,131 +1,112 @@
 # Public Launch Checklist
 
-CodexPro is a local developer bridge. Treat public launch readiness as two separate gates:
+CodexPro Runtime currently has four separate publication gates:
 
-1. The npm package is safe and understandable for local developers.
-2. The ChatGPT app surface is stable enough for users to connect through Developer Mode.
+1. Public source repository
+2. npm package
+3. GitHub Release and Pages
+4. Public app or hosted service
 
-Do not present CodexPro as a fully reviewed public ChatGPT app until it has gone through the current app review flow.
+Passing one gate does not authorize or certify the others.
 
-## Release Gate
+## Current status
 
-Run these before tagging a release:
+| Gate | Status |
+|---|---|
+| Public source repository | Open |
+| Source CI | Configured |
+| npm package `@menglook/codexpro` | Not published |
+| GitHub Release | None |
+| GitHub Pages | Not deployed |
+| Reviewed public ChatGPT app | Not claimed |
+| Hosted relay or SaaS | Not provided |
+
+## Source gate
+
+Run before updating public `main`:
 
 ```bash
-npm run release-gate
-```
-
-For a publish-time npm registry check, run:
-
-```bash
-npm run release-gate -- --include-npm-view
-```
-
-For manual diagnosis, the gate expands to:
-
-```bash
+npm ci --ignore-scripts --no-audit --no-fund
+npm run typecheck
 npm run build
-npm run smoke
-npm run browser-smoke
-npm run pack-smoke
-npm run fresh-install-smoke
-node scripts/codexpro.mjs doctor --tunnel none
+npm run cli:help
+npm run pack:dry-run
 ```
 
-After publishing, do not announce npm availability until the `latest` dist-tag matches `package.json`.
+Also require:
 
-`npm run pack-smoke` must create a real tarball and verify the package surface before release. `npm run fresh-install-smoke` must then install that tarball into a temporary consumer project and verify the installed `codexpro` CLI from a new-user perspective.
+- reviewed public file manifest;
+- sensitive-content scan with values redacted;
+- license and attribution review;
+- no private history, runtime evidence, credentials, tunnel identity, or business data;
+- anonymous-link validation;
+- local and remote Git tree verification after publication.
 
-The tarball must not include:
+## npm gate
 
-```text
-.env files
-local tunnel URLs
-CodexPro tokens
-Cloudflare or ngrok tokens
-.ai-bridge runtime files
-node_modules
-local screenshots or reports
-```
+Do not publish while `package.json` is `private: true`.
 
-## ChatGPT App Gate
+Before any future npm publication:
 
-Before announcing broadly:
+- obtain explicit publication authorization;
+- confirm package scope ownership and access;
+- remove `private: true` in a reviewed release change;
+- verify version consistency across package metadata and runtime protocol responses;
+- create a real tarball and inspect every included path;
+- install the tarball into a clean consumer project;
+- verify the published dist-tag after publication;
+- document rollback and deprecation procedures.
 
-- Test in ChatGPT Developer Mode with a fresh app install.
-- Test quick tunnel, saved ngrok domain, and local-only mode.
-- Refresh actions after widget URI or metadata changes.
-- Confirm CSP stays enabled in Developer Mode.
-- Capture screenshots for:
-  - app connection screen
-  - `server_config`
-  - `open_current_workspace`
-  - one `write`
-  - one `edit`
-  - one `search`
-  - one failure state
-- Run the same golden prompts on each release and compare behavior.
+Never announce npm availability before the registry state is verified.
 
-Suggested golden prompts:
+## GitHub Release gate
 
-```text
-Use CodexPro. Call server_config, then open_current_workspace with include_tree=false. Read README.md and summarize the project without editing files.
-```
+Before creating a Release:
 
-```text
-Use CodexPro. Create a small static site from PRODUCT.md by writing index.html, styles.css, and README.md. Verify with one targeted search.
-```
+- define the version and compatibility statement;
+- prepare a changelog based only on public changes;
+- attach or reference reproducible validation evidence;
+- confirm no private artifacts are attached;
+- document known limitations;
+- obtain explicit Release authorization.
 
-```text
-Use CodexPro. Try to read .env. Explain why the request is blocked.
-```
+## Pages gate
 
-```text
-Use CodexPro. Run bash with pwd, then run bash with a blocked command. Report both outcomes.
-```
+Before enabling GitHub Pages:
 
-## Security Gate
+- confirm all links use the independent repository identity;
+- remove private product paths and outdated screenshots;
+- use only current, verified UI evidence;
+- add a clear non-endorsement statement;
+- confirm Pages does not expose internal reports or analytics.
 
-- Keep auth enabled for public tunnels.
-- Keep `CODEXPRO_BASH_MODE=safe` by default.
-- Keep `CODEXPRO_WRITE_MODE=workspace` only for agent mode.
-- Keep blocked path tests for `.env`, `.git`, `node_modules`, private keys, and symlink escapes.
-- Do not broaden allowed roots during setup unless the user explicitly asks.
-- Do not log query strings, tokens, file contents, prompts, or full command output by default.
+## Public app or hosted-service gate
 
-## Onboarding Gate
+Do not present CodexPro as a reviewed public ChatGPT app, hosted relay, or managed service unless that exact surface exists and has completed its applicable review and security process.
 
-Fresh-user setup should work with:
+Before any such announcement:
 
-```bash
-npx codexpro@latest start
-```
+- test from a fresh user environment;
+- document account and product prerequisites using current official sources;
+- verify authentication, CSP, privacy, logging, deletion, and incident response;
+- distinguish local runtime behavior from hosted behavior;
+- obtain separate deployment and announcement authorization.
 
-The terminal must clearly show:
+## Security gate
 
-- workspace root
-- current mode
-- public URL strategy
-- that the Server URL is copied
-- that Enter opens ChatGPT connector settings
-- how to stop the process
+- Use repository-specific roots.
+- Keep public HTTP authentication enabled.
+- Keep Bash safe or off by default.
+- Do not expose generic writes in planning-only modes.
+- Block `.env`, `.git`, dependency, build, cache, key, and symlink-escape paths.
+- Do not log raw tokens, prompts, file contents, or full command output by default.
+- Never commit connector URLs containing authentication data.
 
-For stable URLs, `codexpro setup` must save enough profile state so future starts from the same workspace only need:
+## Adoption claims
 
-```bash
-codexpro start
-```
-
-Project-local aliases may wrap the full trusted command. This repository keeps the stable named-tunnel agent workflow behind:
-
-```bash
-npm run connect:stable -- --root .
-```
-
-## Known Non-Goals For The Current Local Package
-
-- CodexPro is not an OS sandbox.
-- CodexPro does not guarantee a ChatGPT model can call MCP tools.
-- CodexPro does not change ChatGPT, Codex, or OpenAI quota behavior.
-- Quick Cloudflare tunnels are not permanent URLs.
-- A single shared public URL for every user requires a hosted relay architecture, not only a local npm package.
+- Use only attributable metrics from this repository or its future package.
+- Timestamp every metric.
+- Do not treat stars or forks as active users.
+- Do not use upstream metrics as this repository's metrics.
+- Do not describe private operational usage as public adoption.
+- Obtain permission before quoting a user or organization.

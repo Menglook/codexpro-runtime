@@ -5,7 +5,7 @@ import { applyBrowserRuntimeEnv } from "../shared/browser-runtime-env.mjs";
 import { recoverConfiguredDurableJobs } from "./jobs/jobStartup.js";
 import { createCodexProServer } from "./server.js";
 
-const CODEXPRO_VERSION = "0.28.6";
+const CODEXPRO_VERSION = "0.1.0";
 
 function printHelp(): void {
   console.log(`CodexPro MCP stdio server

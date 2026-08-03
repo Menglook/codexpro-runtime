@@ -57,22 +57,22 @@ function usage() {
   console.log(`CodexPro easy launcher
 
 Usage:
-  npm install -g codexpro
-  codexpro setup
-  codexpro start
-  codexpro start --root /path/to/repo
-  codexpro settings
-  codexpro doctor
-  codexpro execute-handoff --agent opencode --model provider/model
-  codexpro watch-handoff --agent opencode --model provider/model
-  codexpro loop-handoff --agent opencode --model provider/model --review-command "node ./reviewer.js --status {{status_file}} --diff {{diff_file}} --plan-file {{plan_file}}"
-  codexpro --root /path/to/repo
-  codexpro ngrok --hostname your-domain.ngrok-free.dev
-  codexpro stable --hostname codexpro.example.com --tunnel-name codexpro
-  codexpro pro-bundle --root /path/to/repo --copy
-  codexpro pro-apply --root /path/to/repo --file plan.md
-  codexpro install-cloudflared
-  npm run connect -- --root /path/to/repo
+  npm package @menglook/codexpro is not published; run this launcher from source
+  menglook-codexpro setup
+  menglook-codexpro start
+  menglook-codexpro start --root /path/to/repo
+  menglook-codexpro settings
+  menglook-codexpro doctor
+  menglook-codexpro execute-handoff --agent opencode --model provider/model
+  menglook-codexpro watch-handoff --agent opencode --model provider/model
+  menglook-codexpro loop-handoff --agent opencode --model provider/model --review-command "node ./reviewer.js --status {{status_file}} --diff {{diff_file}} --plan-file {{plan_file}}"
+  menglook-codexpro --root /path/to/repo
+  menglook-codexpro ngrok --hostname your-domain.ngrok-free.dev
+  menglook-codexpro stable --hostname codexpro.example.com --tunnel-name codexpro
+  menglook-codexpro pro-bundle --root /path/to/repo --copy
+  menglook-codexpro pro-apply --root /path/to/repo --file plan.md
+  menglook-codexpro install-cloudflared
+  node scripts/codexpro.mjs --root /path/to/repo --tunnel none
   node scripts/codexpro.mjs --root /path/to/repo --tunnel cloudflare
 
 Options:
@@ -145,9 +145,9 @@ Options:
   --help                    Show this message.
 
 Execute handoff options:
-  codexpro execute-handoff --agent opencode --model provider/model
-  codexpro execute-handoff --agent pi --model provider/model
-  codexpro execute-handoff --agent custom --command "my-agent --task-file {{plan_file}}"
+  menglook-codexpro execute-handoff --agent opencode --model provider/model
+  menglook-codexpro execute-handoff --agent pi --model provider/model
+  menglook-codexpro execute-handoff --agent custom --command "my-agent --task-file {{plan_file}}"
   --agent <opencode|pi|codex|custom>
                              Local implementation agent adapter.
   --model <provider/model>  Optional model name passed to the adapter.
@@ -162,9 +162,9 @@ Execute handoff options:
   --yes                     Run without interactive confirmation.
 
 Watch handoff options:
-  codexpro watch-handoff --agent opencode --model provider/model
-  codexpro watch-handoff --agent pi --model provider/model
-  codexpro watch-handoff --agent custom --command "my-agent --task-file {{plan_file}}"
+  menglook-codexpro watch-handoff --agent opencode --model provider/model
+  menglook-codexpro watch-handoff --agent pi --model provider/model
+  menglook-codexpro watch-handoff --agent custom --command "my-agent --task-file {{plan_file}}"
   --once                    Exit after checking/running one new plan.
   --poll-interval-ms <ms>   Poll interval. Default: 2000.
   --debounce-ms <ms>        Wait for plan file stability. Default: 500.
@@ -175,7 +175,7 @@ Watch handoff options:
   --yes                     Start automatic local execution without startup confirmation.
 
 Loop handoff options:
-  codexpro loop-handoff --agent opencode --model provider/model --review-command "reviewer --status {{status_file}} --diff {{diff_file}} --plan-file {{plan_file}}"
+  menglook-codexpro loop-handoff --agent opencode --model provider/model --review-command "reviewer --status {{status_file}} --diff {{diff_file}} --plan-file {{plan_file}}"
   --review-command <template>
                              Local reviewer/orchestrator command. It should print CODEXPRO_REVIEW=PASS or CODEXPRO_REVIEW=FAIL.
                              On FAIL it must update .ai-bridge/current-plan.md before the next iteration.
@@ -196,42 +196,42 @@ Loop handoff options:
   --yes                     Start the local loop without startup confirmation.
 
 Default agent mode:
-  codexpro start --root /path/to/repo
+  menglook-codexpro start --root /path/to/repo
 
 Guided setup:
-  codexpro setup
+  menglook-codexpro setup
 
 Workspace settings:
-  codexpro settings
-  codexpro settings show
-  codexpro settings list
-  codexpro settings set --tunnel ngrok --hostname your-domain.ngrok-free.dev
-  codexpro settings use
-  codexpro settings delete --yes
+  menglook-codexpro settings
+  menglook-codexpro settings show
+  menglook-codexpro settings list
+  menglook-codexpro settings set --tunnel ngrok --hostname your-domain.ngrok-free.dev
+  menglook-codexpro settings use
+  menglook-codexpro settings delete --yes
 
 Preflight diagnostics:
-  codexpro doctor
+  menglook-codexpro doctor
 
 Ngrok stable URL mode:
-  codexpro ngrok --root /path/to/repo --hostname your-domain.ngrok-free.dev
+  menglook-codexpro ngrok --root /path/to/repo --hostname your-domain.ngrok-free.dev
 
 Planning-only handoff mode:
-  codexpro start --root /path/to/repo --mode handoff
+  menglook-codexpro start --root /path/to/repo --mode handoff
 
 Execute a local handoff after ChatGPT writes .ai-bridge/current-plan.md:
-  codexpro execute-handoff --agent opencode --model provider/model
-  codexpro execute-handoff --agent pi --model provider/model
-  codexpro execute-handoff --agent custom --command "node ./agent.js --task-file {{plan_file}}" --yes
+  menglook-codexpro execute-handoff --agent opencode --model provider/model
+  menglook-codexpro execute-handoff --agent pi --model provider/model
+  menglook-codexpro execute-handoff --agent custom --command "node ./agent.js --task-file {{plan_file}}" --yes
 
 Watch for new handoff plans and execute them locally:
-  codexpro watch-handoff --agent opencode --model provider/model --yes
-  codexpro watch-handoff --agent custom --command "node ./agent.js --task-file {{plan_file}}" --yes
+  menglook-codexpro watch-handoff --agent opencode --model provider/model --yes
+  menglook-codexpro watch-handoff --agent custom --command "node ./agent.js --task-file {{plan_file}}" --yes
 
 Run a bounded local execute/review loop:
-  codexpro loop-handoff --agent opencode --model provider/model --review-command "node ./reviewer.js --status {{status_file}} --diff {{diff_file}} --plan-file {{plan_file}}" --max-iters 3 --yes
+  menglook-codexpro loop-handoff --agent opencode --model provider/model --review-command "node ./reviewer.js --status {{status_file}} --diff {{diff_file}} --plan-file {{plan_file}}" --max-iters 3 --yes
 
 Stable URL mode after one-time Cloudflare tunnel setup:
-  codexpro stable --root /path/to/repo --hostname codexpro.example.com --tunnel-name codexpro
+  menglook-codexpro stable --root /path/to/repo --hostname codexpro.example.com --tunnel-name codexpro
 `);
 }
 
@@ -321,8 +321,8 @@ function printSavedProfileHint(profile) {
   if (!summary) return;
   printBox('Saved setup found', [
     summary,
-    'From this folder, future launches only need: codexpro start',
-    'Use codexpro setup when you want to change the port, mode, tool mode, tunnel, hostname, or token.'
+    'From this folder, future launches only need: menglook-codexpro start',
+    'Use menglook-codexpro setup when you want to change the port, mode, tool mode, tunnel, hostname, or token.'
   ]);
 }
 
@@ -939,11 +939,11 @@ function portInUseHelp(host, port) {
     'If you want two repositories running at the same time, each one needs its own local port.',
     '',
     'Example:',
-    '  repo A: codexpro setup  -> port 8787 -> hostname A',
-    '  repo B: codexpro setup  -> port 8788 -> hostname B',
+    '  repo A: menglook-codexpro setup  -> port 8787 -> hostname A',
+    '  repo B: menglook-codexpro setup  -> port 8788 -> hostname B',
     '',
     'For quick tunnels you can also start the second repo with:',
-    '  codexpro start --port 8788',
+    '  menglook-codexpro start --port 8788',
     '',
     'Stable ngrok or Cloudflare hostnames also cannot be shared by two running repositories at once.'
   ].join('\n');
@@ -2759,13 +2759,13 @@ function printControlHelp() {
 function printModeHelp() {
   console.log('');
   console.log('Modes');
-  console.log('  codexpro start                 agent mode: read/write/edit/search/bash');
-  console.log('  codexpro start --no-bash       agent mode without ChatGPT-triggered shell commands');
-  console.log('  codexpro start --bash-session main --require-bash-session');
-  console.log('  codexpro start --mode handoff  planning-only .ai-bridge handoff');
-  console.log('  codexpro start --mode pro      export context for models without MCP tools');
-  console.log('  codexpro start --tool-mode minimal   expose only the tight coding loop');
-  console.log('  codexpro start --tool-mode full      expose every advanced compatibility tool');
+  console.log('  menglook-codexpro start                 agent mode: read/write/edit/search/bash');
+  console.log('  menglook-codexpro start --no-bash       agent mode without ChatGPT-triggered shell commands');
+  console.log('  menglook-codexpro start --bash-session main --require-bash-session');
+  console.log('  menglook-codexpro start --mode handoff  planning-only .ai-bridge handoff');
+  console.log('  menglook-codexpro start --mode pro      export context for models without MCP tools');
+  console.log('  menglook-codexpro start --tool-mode minimal   expose only the tight coding loop');
+  console.log('  menglook-codexpro start --tool-mode full      expose every advanced compatibility tool');
   console.log('');
 }
 
@@ -2776,17 +2776,17 @@ function printStableUrlHelp() {
   console.log('Quick tunnels change every restart. ChatGPT apps should use a stable URL.');
   console.log('');
   console.log('One-time Cloudflare setup with your domain:');
-  console.log('  codexpro install-cloudflared');
+  console.log('  menglook-codexpro install-cloudflared');
   console.log('  ~/.codexpro/bin/cloudflared tunnel login');
   console.log('  ~/.codexpro/bin/cloudflared tunnel create codexpro');
   console.log('  ~/.codexpro/bin/cloudflared tunnel route dns codexpro codexpro.example.com');
   console.log('');
   console.log('Daily start:');
-  console.log('  codexpro stable --hostname codexpro.example.com --tunnel-name codexpro --token keep-this-stable-token');
+  console.log('  menglook-codexpro stable --hostname codexpro.example.com --tunnel-name codexpro --token keep-this-stable-token');
   console.log('');
   console.log('Ngrok alternative with a reserved domain:');
   console.log('  ngrok config add-authtoken <your-ngrok-token>');
-  console.log('  codexpro ngrok --hostname your-domain.ngrok-free.dev --token keep-this-stable-token');
+  console.log('  menglook-codexpro ngrok --hostname your-domain.ngrok-free.dev --token keep-this-stable-token');
   console.log('');
 }
 
@@ -2898,10 +2898,10 @@ async function runDoctor(argv) {
   if (tunnel === 'none') {
     record('ok', 'Tunnel', 'local-only mode');
   } else if (tunnel === 'cloudflare') {
-    record(cloudflaredPath ? 'ok' : 'warn', 'cloudflared', cloudflaredPath || 'missing now; codexpro start can auto-install unless --no-install-cloudflared is used');
+    record(cloudflaredPath ? 'ok' : 'warn', 'cloudflared', cloudflaredPath || 'missing now; menglook-codexpro start can auto-install unless --no-install-cloudflared is used');
   } else if (tunnel === 'cloudflare-named') {
     record(stableHostname ? 'ok' : 'fail', 'Hostname', stableHostname || 'required for Cloudflare stable mode');
-    record(cloudflaredPath ? 'ok' : 'warn', 'cloudflared', cloudflaredPath || 'missing now; run codexpro install-cloudflared or pass --cloudflared');
+    record(cloudflaredPath ? 'ok' : 'warn', 'cloudflared', cloudflaredPath || 'missing now; run menglook-codexpro install-cloudflared or pass --cloudflared');
     record(
       optionValue(args, profile, 'tunnelName', ['CLOUDFLARE_TUNNEL_NAME', 'CODEXPRO_TUNNEL_NAME'], '') ||
         optionValue(args, profile, 'cloudflareTokenFile', ['CLOUDFLARE_TUNNEL_TOKEN_FILE', 'CODEXPRO_CLOUDFLARE_TUNNEL_TOKEN_FILE'], '') ||
@@ -3092,7 +3092,7 @@ async function maybeConfigureFirstRun(root, args, profile) {
 
   printBox('First run setup', [
     'No saved tunnel preference exists for this workspace.',
-    'Choose once now. CodexPro will reuse this choice on future codexpro start runs until you change or delete it with codexpro settings.'
+    'Choose once now. CodexPro will reuse this choice on future menglook-codexpro start runs until you change or delete it with menglook-codexpro settings.'
   ]);
 
   const rl = createInterface({ input: process.stdin, output: process.stdout });
@@ -3117,7 +3117,7 @@ function commandPreview(args) {
 
 async function runSetupWizard(argv) {
   if (!process.stdin.isTTY) {
-    throw new Error('codexpro setup needs an interactive terminal. Use codexpro start --root /path/to/repo for non-interactive scripts.');
+    throw new Error('menglook-codexpro setup needs an interactive terminal. Use menglook-codexpro start --root /path/to/repo for non-interactive scripts.');
   }
   const defaults = parseArgs(argv);
   const defaultRoot = path.resolve(expandHome(defaults.root ?? process.env.CODEXPRO_ROOT ?? process.cwd()));
@@ -3290,7 +3290,7 @@ function printProfile(root, profile) {
     printBox('CodexPro settings', [
       labelValue('Workspace', root),
       'No saved settings for this workspace.',
-      'Run codexpro settings set or codexpro setup to save a tunnel preference.'
+      'Run menglook-codexpro settings set or menglook-codexpro setup to save a tunnel preference.'
     ]);
     return;
   }
@@ -3325,7 +3325,7 @@ function printProfileList(profiles = listWorkspaceProfiles()) {
   if (!profiles.length) {
     printBox('CodexPro saved setups', [
       'No saved workspace settings found.',
-      'Run codexpro setup or codexpro settings set to create one.'
+      'Run menglook-codexpro setup or menglook-codexpro settings set to create one.'
     ]);
     return;
   }
@@ -3334,7 +3334,7 @@ function printProfileList(profiles = listWorkspaceProfiles()) {
 
 function saveSettingsFromArgs(root, args, profile) {
   if (args.cloudflareToken !== undefined) {
-    throw new Error('codexpro settings set does not save raw --cloudflare-token. Save it to a local file and use --cloudflare-token-file <path>; start still accepts --cloudflare-token for a single launch.');
+    throw new Error('menglook-codexpro settings set does not save raw --cloudflare-token. Save it to a local file and use --cloudflare-token-file <path>; start still accepts --cloudflare-token for a single launch.');
   }
   const tunnel = optionValue(args, profile, 'tunnel', ['CODEXPRO_TUNNEL'], profile.tunnel ?? 'cloudflare');
   if (!['none', 'cloudflare', 'cloudflare-named', 'ngrok'].includes(tunnel)) {
@@ -3446,7 +3446,7 @@ async function runSettings(argv) {
         rl.close();
       }
     } else if (!args.yes) {
-      throw new Error('Use codexpro settings delete --yes in non-interactive shells.');
+      throw new Error('Use menglook-codexpro settings delete --yes in non-interactive shells.');
     }
     deleteWorkspaceProfile(root);
     statusLine('ok', 'Deleted saved settings for this workspace.');
@@ -3687,7 +3687,7 @@ async function main() {
   if (profile.profilePath && !args.noProfile) {
     statusLine('ok', `Using saved profile: ${profile.profilePath}`);
     const summary = profileSummary(profile);
-    if (summary) statusLine('ok', `${summary}. Future launches from this folder only need: codexpro start`);
+    if (summary) statusLine('ok', `${summary}. Future launches from this folder only need: menglook-codexpro start`);
   }
 
   const tunnel = optionValue(args, profile, 'tunnel', ['CODEXPRO_TUNNEL'], 'cloudflare');
@@ -3706,7 +3706,7 @@ async function main() {
     throw new Error('--hostname is required with stable URL mode.');
   }
   if (tunnel === 'ngrok' && !stableHostname) {
-    throw new Error('--hostname is required with ngrok tunnel mode. Example: codexpro ngrok --hostname your-domain.ngrok-free.dev');
+    throw new Error('--hostname is required with ngrok tunnel mode. Example: menglook-codexpro ngrok --hostname your-domain.ngrok-free.dev');
   }
   const mode = optionValue(args, profile, 'mode', ['CODEXPRO_MODE'], 'agent');
   if (!['agent', 'handoff', 'pro'].includes(mode)) {
@@ -3876,7 +3876,7 @@ async function main() {
         '',
         '  ngrok config add-authtoken <your-ngrok-token>',
         '  find your free ngrok dev domain in the ngrok dashboard',
-        '  codexpro ngrok --hostname your-domain.ngrok-free.dev --token keep-this-stable-token',
+        '  menglook-codexpro ngrok --hostname your-domain.ngrok-free.dev --token keep-this-stable-token',
         '',
         'If the domain is already in use, stop the other ngrok process or choose another reserved domain.'
       ].join('\n');

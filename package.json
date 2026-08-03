@@ -2,9 +2,18 @@
   "name": "@menglook/codexpro",
   "version": "0.1.0",
   "private": true,
-  "description": "A sanitized public runtime for evidence-driven MCP and Codex workflows, maintained by Menglook.",
+  "description": "A local, evidence-driven agent runtime and MCP control plane for open-source maintainers.",
   "type": "module",
   "license": "MIT",
+  "keywords": [
+    "mcp",
+    "agent-runtime",
+    "developer-tools",
+    "open-source",
+    "workflow",
+    "security",
+    "local-first"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Menglook/codexpro-runtime.git"
@@ -24,11 +33,14 @@
     "chrome-extension",
     "browser-skills-builtin",
     "scripts",
+    "docs",
     "README.md",
+    "README.zh-CN.md",
     "NOTICE.md",
     "LICENSE",
     "SECURITY.md",
-    "CONTRIBUTING.md"
+    "CONTRIBUTING.md",
+    "PUBLIC_LAUNCH_CHECKLIST.md"
   ],
   "bin": {
     "codexpro-mcp": "dist/stdio.js",
@@ -39,7 +51,10 @@
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "cli:help": "node scripts/codexpro-cli.mjs --help",
-    "pack:dry-run": "npm pack --dry-run --json"
+    "docs:check": "node scripts/verify-doc-links.mjs",
+    "pack:dry-run": "npm pack --dry-run --json",
+    "package:check": "node scripts/verify-package-boundary.mjs",
+    "check": "npm run docs:check && npm run typecheck && npm run build && npm run cli:help && npm run package:check"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "1.29.0",

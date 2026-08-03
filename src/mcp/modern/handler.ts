@@ -338,7 +338,7 @@ export async function handleModernMcpRequest(input: {
       if (cached) return success(input.body, context, cached, policy);
       const result = adapter.serializeDiscover({
         serverName: "codexpro",
-        serverVersion: "0.28.6",
+        serverVersion: "0.1.0",
         tasksExtensionEnabled: input.config.mcpTasksExtensionEnabled,
         mrtrEnabled: input.config.mcpMrtrEnabled,
         appsEnabled: input.config.mcpAppsEnabled,
