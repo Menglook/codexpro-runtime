@@ -1,0 +1,64 @@
+name: Adoption feedback
+description: Share a real CodexPro Runtime use case without private or sensitive data.
+title: "[Adoption]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for sharing a reproducible use case for `Menglook/codexpro-runtime`.
+
+        Do not include credentials, private source code, customer data, production hostnames, tunnel identities, security vulnerabilities, or other sensitive information. Report security issues through SECURITY.md instead.
+
+  - type: textarea
+    id: use_case
+    attributes:
+      label: What did you use CodexPro Runtime for?
+      description: Describe the maintenance or engineering task and why the runtime was useful.
+      placeholder: "Example: I used the source build to inspect and validate a focused change in a local repository."
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Share only non-sensitive details needed to understand the setup.
+      placeholder: "Example: Node.js 20, Linux or Windows/WSL, MCP over stdio, source commit or version."
+    validations:
+      required: true
+
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Result and evidence
+      description: State what worked, what did not work, and which checks or public references support the result.
+      placeholder: Include commands, public links, or redacted results. Do not include secrets or private repository content.
+    validations:
+      required: true
+
+  - type: textarea
+    id: limitations
+    attributes:
+      label: Limitations or follow-up
+      description: What remained manual, unverified, or difficult?
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety confirmation
+      options:
+        - label: I removed credentials, private source, customer data, production details, and vulnerability information.
+          required: true
+        - label: I understand this feedback is voluntary and no payment, review incentive, or other reward is offered.
+          required: true
+
+  - type: checkboxes
+    id: quotation
+    attributes:
+      label: Optional quotation permission
+      description: Leave this unchecked when you do not authorize quotation.
+      options:
+        - label: I authorize the maintainers to quote this public issue with attribution in project documentation or an open-source application.
+          required: false
